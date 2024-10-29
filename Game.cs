@@ -18,15 +18,18 @@ namespace CG
 
         Mesh? mesh;
         Mesh? mesh2;
-        Mesh? mesh3;
+        Mesh? mapMesh;
+        Mesh? playerMesh;
 
         Transform transform = new Transform();
         Transform transform2 = new Transform();
-        Transform transform3 = new Transform();
+        Transform mapTransform = new Transform();
+        Transform playerTransform = new Transform();
         
         TexturedMaterial? material1;
         TexturedMaterial? material2;
         TexturedMaterial? material3;
+        TexturedMaterial? palyerMaterial;
         
         Camera camera = new Camera();
         
@@ -53,7 +56,7 @@ namespace CG
             mesh = Mesh.CreateSphere(0.5f);
             mesh2 = Mesh.CreateCube(1f);
 
-            mesh3 = Mesh.CreatePlane(25f);
+            mapMesh = Mesh.CreatePlane(25f);
 
             Shader vertexShader = Shader.CreateFromFile("./assets/shaders/shader.vert", ShaderType.VertexShader);
             Shader fragmentShader = Shader.CreateFromFile("./assets/shaders/shader.frag", ShaderType.FragmentShader);
@@ -67,6 +70,7 @@ namespace CG
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
             material3 = new TexturedMaterial(program, new Vector3(0f, 1f, 0f), texture);
 
+            // camera
             camera.aspectRatio = (float)Size.X / Size.Y;
             camera.position.Z = 8f;
             camera.position.Y = 3.5f;
@@ -107,38 +111,40 @@ namespace CG
                 transform.position += transform.Forward * delta;
             }
 
-            // Movimento da câmera
+            // Movimento da câmera -> fica estática, será o movimento do player
             if (KeyboardState.IsKeyDown(Keys.D))
             {
-                camera.position += camera.Right * delta;
+                //player.position += player.Right* delta;
+
+                //camera.position += camera.Right * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.A))
             {
-                camera.position -= camera.Right * delta;
+                //camera.position -= camera.Right * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.W))
             {
-                camera.position += camera.Forward * delta;
+                //camera.position += camera.Forward * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.S))
             {
-                camera.position -= camera.Forward * delta;
+                //camera.position -= camera.Forward * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.Q))
             {
-                camera.position -= camera.Up * delta;
+                //camera.position -= camera.Up * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.E))
             {
-                camera.position += camera.Up * delta;
+                //camera.position += camera.Up * delta;
             }
 
             // Scroll do mapa
-            // map.position.X += map.Forward * delta;
+            mapTransform.position -= mapTransform.Forward * delta;
 
             // Rotação da câmera
-            camera.rotation.Y -= MouseState.Delta.X * 0.1f;
-            camera.rotation.X -= MouseState.Delta.Y * 0.1f;
+            //camera.rotation.Y -= MouseState.Delta.X * 0.1f;
+            //camera.rotation.X -= MouseState.Delta.Y * 0.1f;
         }
 
         // Função de atualização visual, chamada múltiplas vezes por segundo em
@@ -169,8 +175,8 @@ namespace CG
 
             // terceiro transform
             material3?.Use();
-            program?.ApplyTransform(transform3);
-            mesh3?.Draw();
+            program?.ApplyTransform(mapTransform);
+            mapMesh?.Draw();
 
             SwapBuffers();
         }
