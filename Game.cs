@@ -28,7 +28,7 @@ namespace CG
         
         TexturedMaterial? material1;
         TexturedMaterial? material2;
-        TexturedMaterial? material3;
+        TexturedMaterial? mapMaterial;
         TexturedMaterial? palyerMaterial;
         
         Camera camera = new Camera();
@@ -68,7 +68,7 @@ namespace CG
 
             material1 = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
-            material3 = new TexturedMaterial(program, new Vector3(0f, 1f, 0f), texture);
+            mapMaterial = new TexturedMaterial(program, new Vector3(0f, 0.7f, 1f), texture);
 
             // camera
             camera.aspectRatio = (float)Size.X / Size.Y;
@@ -174,7 +174,7 @@ namespace CG
             mesh2?.Draw();
 
             // terceiro transform
-            material3?.Use();
+            mapMaterial?.Use();
             program?.ApplyTransform(mapTransform);
             mapMesh?.Draw();
 
