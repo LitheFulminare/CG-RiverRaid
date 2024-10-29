@@ -18,12 +18,15 @@ namespace CG
 
         Mesh? mesh;
         Mesh? mesh2;
+        Mesh? mesh3;
 
         Transform transform = new Transform();
         Transform transform2 = new Transform();
+        Transform transform3 = new Transform();
         
         TexturedMaterial? material1;
         TexturedMaterial? material2;
+        TexturedMaterial? material3;
         
         Camera camera = new Camera();
         
@@ -50,6 +53,8 @@ namespace CG
             mesh = Mesh.CreateSphere(0.5f);
             mesh2 = Mesh.CreateCube(1f);
 
+            mesh3 = Mesh.CreatePlane(25f);
+
             Shader vertexShader = Shader.CreateFromFile("./assets/shaders/shader.vert", ShaderType.VertexShader);
             Shader fragmentShader = Shader.CreateFromFile("./assets/shaders/shader.frag", ShaderType.FragmentShader);
 
@@ -60,9 +65,12 @@ namespace CG
 
             material1 = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
+            material3 = new TexturedMaterial(program, new Vector3(0f, 1f, 0f), texture);
 
             camera.aspectRatio = (float)Size.X / Size.Y;
-            camera.position.Z = 1f;
+            camera.position.Z = 8f;
+            camera.position.Y = 3.5f;
+            camera.rotation.X = 320f;
 
             transform2.position.Y = 1f;
 
@@ -125,6 +133,9 @@ namespace CG
                 camera.position += camera.Up * delta;
             }
 
+            // Scroll do mapa
+            // map.position.X += map.Forward * delta;
+
             // Rotação da câmera
             camera.rotation.Y -= MouseState.Delta.X * 0.1f;
             camera.rotation.X -= MouseState.Delta.Y * 0.1f;
@@ -155,6 +166,11 @@ namespace CG
             material2?.Use();
             program?.ApplyTransform(transform2);
             mesh2?.Draw();
+
+            // terceiro transform
+            material3?.Use();
+            program?.ApplyTransform(transform3);
+            mesh3?.Draw();
 
             SwapBuffers();
         }
