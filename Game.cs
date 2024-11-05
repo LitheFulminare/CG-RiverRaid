@@ -13,6 +13,7 @@ namespace CG
     internal class Game : GameWindow
     {
         ShaderProgram? program;// Shader program utilizado.
+        ShaderProgram? programScroll; // shader usado pra scrollar o mapa
 
         Texture? texture;
 
@@ -29,7 +30,7 @@ namespace CG
         TexturedMaterial? material1;
         TexturedMaterial? material2;
         TexturedMaterial? mapMaterial;
-        TexturedMaterial? palyerMaterial;
+        TexturedMaterial? playerMaterial;
         
         Camera camera = new Camera();
         
@@ -61,14 +62,20 @@ namespace CG
             Shader vertexShader = Shader.CreateFromFile("./assets/shaders/shader.vert", ShaderType.VertexShader);
             Shader fragmentShader = Shader.CreateFromFile("./assets/shaders/shader.frag", ShaderType.FragmentShader);
 
+            // shader para scroll do mapa
+            Shader fragmentShaderScroll = Shader.CreateFromFile("./assets/shaders/shaderScroll.frag", ShaderType.FragmentShader);
+
             program = new ShaderProgram(new Shader[] { vertexShader, fragmentShader });
             program.Use();
+
+            programScroll = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
+            programScroll.Use();
 
             texture = new Texture("./assets/textures/img.jpg");
 
             material1 = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
-            mapMaterial = new TexturedMaterial(program, new Vector3(0f, 0.7f, 1f), texture);
+            mapMaterial = new TexturedMaterial(programScroll, new Vector3(1f, 0f, 0f), texture);
 
             // camera
             camera.aspectRatio = (float)Size.X / Size.Y;
@@ -139,8 +146,8 @@ namespace CG
                 //camera.position += camera.Up * delta;
             }
 
-            // Scroll do mapa
-            mapTransform.position -= mapTransform.Forward * delta;
+            // Scroll do mapa -> não mudará a posição,tudo será feito por shader
+            //mapTransform.position -= mapTransform.Forward * delta;
 
             // Rotação da câmera
             //camera.rotation.Y -= MouseState.Delta.X * 0.1f;
