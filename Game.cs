@@ -36,6 +36,8 @@ namespace CG
         
         DirectionalLight light = new DirectionalLight();
 
+        float startTime = (float)GLFW.GetTime();
+
         // Construtor base da classe. Por simplicidade, recebe apenas um título
         //e dimensões de altura e largura da janela que será aberta.
         public Game(string title, int width, int height) : base(GameWindowSettings.Default, new NativeWindowSettings() { Title = title, ClientSize = (width, height) })
@@ -159,7 +161,10 @@ namespace CG
         //de VSync, por exemplo.
         protected override void OnRenderFrame(FrameEventArgs args)
         {
-            float delta = (float)args.Time;
+            //float delta = (float)args.Time;
+            
+            float time = (float)GLFW.GetTime() - startTime;
+            Console.WriteLine($"Time: {time}");
 
             base.OnRenderFrame(args);
             GL.ClearColor(0f, 0f, 0f, 1f);            
@@ -171,7 +176,9 @@ namespace CG
 
             programScroll?.ApplyDirectionalLight(light);
             programScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
-            programScroll?.SetUniform("time", delta);
+
+            // parametros para scrollar o mar
+            programScroll?.SetUniform("tie", time);
 
             // Envio das matrizes de câmera para o shader program.
             program?.ApplyCamera(camera);
