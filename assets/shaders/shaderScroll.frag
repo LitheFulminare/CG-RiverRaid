@@ -10,6 +10,8 @@ uniform vec3 u_LightColor;
 uniform vec3 u_AmbientLight;
 uniform vec3 u_Color;
 
+uniform float timeDelta;
+
 void main() {
 	float lightIntensity = max(-dot(u_LightDirection, normalize(f_Normal)), 0);
 

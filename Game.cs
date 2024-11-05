@@ -75,7 +75,7 @@ namespace CG
 
             material1 = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
-            mapMaterial = new TexturedMaterial(programScroll, new Vector3(1f, 0f, 0f), texture);
+            mapMaterial = new TexturedMaterial(programScroll, new Vector3(0f, 0.7f, 1f), texture);
 
             // camera
             camera.aspectRatio = (float)Size.X / Size.Y;
@@ -167,8 +167,12 @@ namespace CG
             program?.ApplyDirectionalLight(light);
             program?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
 
+            programScroll?.ApplyDirectionalLight(light);
+            programScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
+
             // Envio das matrizes de câmera para o shader program.
             program?.ApplyCamera(camera);
+            programScroll?.ApplyCamera(camera);
 
             // Desenho do primeiro transform
             material1?.Use();
@@ -182,7 +186,7 @@ namespace CG
 
             // terceiro transform
             mapMaterial?.Use();
-            program?.ApplyTransform(mapTransform);
+            programScroll?.ApplyTransform(mapTransform);
             mapMesh?.Draw();
 
             SwapBuffers();
