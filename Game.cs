@@ -159,6 +159,8 @@ namespace CG
         //de VSync, por exemplo.
         protected override void OnRenderFrame(FrameEventArgs args)
         {
+            float delta = (float)args.Time;
+
             base.OnRenderFrame(args);
             GL.ClearColor(0f, 0f, 0f, 1f);            
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -169,6 +171,7 @@ namespace CG
 
             programScroll?.ApplyDirectionalLight(light);
             programScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
+            programScroll?.SetUniform("time", delta);
 
             // Envio das matrizes de câmera para o shader program.
             program?.ApplyCamera(camera);
