@@ -46,7 +46,7 @@ namespace CG
         {
             int location = GL.GetUniformLocation(_id, name);
             Use();
-            GL.Uniform1(location, 0);
+            GL.Uniform1(location, value);
         }
 
         public void SetUniform(string name, Vector2 value)

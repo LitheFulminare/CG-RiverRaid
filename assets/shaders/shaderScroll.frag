@@ -14,18 +14,17 @@ uniform float time;
 
 void main() 
 {
-	float speed = 0.5f;
+	float speed = 0.4f;
 
 	vec2 uv = f_TexCoords;
-	//uv.y = speed * time;
-	uv.y += 0.1f;
+	uv.y += speed * time;
+	//uv.y += 0.1f;
 
-	//uv.y = fract(uv.y);
+	uv.y = fract(uv.y);
 
 	//f_TexCoords += 0.5f;
 
 	out_Color = vec4(u_Color, 1.0) * texture(u_Texture, uv);
-	//out_Color = vec4(fract(time), 0.0, 0.0, 1.0);
 
 	float lightIntensity = max(-dot(u_LightDirection, normalize(f_Normal)), 0);
 	out_Color.rgb *= clamp(u_LightColor * lightIntensity + u_AmbientLight, 0, 1);

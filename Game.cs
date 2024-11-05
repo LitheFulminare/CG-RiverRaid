@@ -178,7 +178,7 @@ namespace CG
             programScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
 
             // parametros para scrollar o mar
-            programScroll?.SetUniform("tie", time);
+            programScroll?.SetUniform("time", time);
 
             // Envio das matrizes de câmera para o shader program.
             program?.ApplyCamera(camera);
