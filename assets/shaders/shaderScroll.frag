@@ -18,11 +18,6 @@ void main()
 
 	vec2 uv = f_TexCoords;
 	uv.y += speed * time;
-	//uv.y += 0.1f;
-
-	uv.y = fract(uv.y);
-
-	//f_TexCoords += 0.5f;
 
 	out_Color = vec4(u_Color, 1.0) * texture(u_Texture, uv);
 

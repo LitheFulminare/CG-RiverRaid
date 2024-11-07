@@ -163,6 +163,8 @@ namespace CG
         {
             //float delta = (float)args.Time;
             
+            // a quanto tempo a aplicação tá rodando
+            // não pode ser delta pq no geral ele é constante, e se o parametro não mudar a textura também não muda
             float time = (float)GLFW.GetTime() - startTime;
             Console.WriteLine($"Time: {time}");
 
