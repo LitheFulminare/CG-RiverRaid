@@ -40,6 +40,7 @@ namespace CG
         //e dimensões de altura e largura da janela que será aberta.
         public Game(string title, int width, int height) : base(GameWindowSettings.Default, new NativeWindowSettings() { Title = title, ClientSize = (width, height) })
         {
+
         }
 
         // Função que roda uma única vez quando a janela é criada, todo código
@@ -103,6 +104,8 @@ namespace CG
 
             // O delta representa o tempo passado entre frames.
             float delta = (float)args.Time;
+
+            GameManager.Update(delta);          
 
             playerTransform.rotation.Y += delta * 9f;
 
