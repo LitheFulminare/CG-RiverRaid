@@ -17,25 +17,23 @@ namespace CG
 
         Texture? texture;
 
-        Mesh? mesh;
+        Mesh? playerMesh;
         Mesh? mesh2;
         Mesh? mapMesh;
-        Mesh? playerMesh;
 
-        Transform transform = new Transform();
+        Transform playerTransform = new Transform();
         Transform transform2 = new Transform();
         Transform mapTransform = new Transform();
-        Transform playerTransform = new Transform();
         
-        TexturedMaterial? material1;
+        TexturedMaterial? playerMaterial;
         TexturedMaterial? material2;
         TexturedMaterial? mapMaterial;
-        TexturedMaterial? playerMaterial;
         
         Camera camera = new Camera();
         
         DirectionalLight light = new DirectionalLight();
 
+        float playerSpeed = 3f;
         float startTime = (float)GLFW.GetTime();
 
         // Construtor base da classe. Por simplicidade, recebe apenas um título
@@ -56,7 +54,7 @@ namespace CG
 
             GL.CullFace(CullFaceMode.Back);
 
-            mesh = Mesh.CreateSphere(0.5f);
+            playerMesh = Mesh.CreateSphere(0.5f);
             mesh2 = Mesh.CreateCube(1f);
 
             mapMesh = Mesh.CreatePlane(25f);
@@ -75,15 +73,18 @@ namespace CG
 
             texture = new Texture("./assets/textures/img.jpg");
 
-            material1 = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
+            playerMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
             mapMaterial = new TexturedMaterial(programScroll, new Vector3(0f, 0.7f, 1f), texture);
 
-            // camera
+            // camera -> proporção da tela e posição
             camera.aspectRatio = (float)Size.X / Size.Y;
             camera.position.Z = 8f;
             camera.position.Y = 3.5f;
             camera.rotation.X = 320f;
+
+            // posição do player
+            playerTransform.position.Z = 5.5f;
 
             transform2.position.Y = 1f;
 
@@ -103,23 +104,24 @@ namespace CG
             // O delta representa o tempo passado entre frames.
             float delta = (float)args.Time;
 
-            transform.rotation.Y += delta * 9f;
+            playerTransform.rotation.Y += delta * 9f;
 
             // Modificação do componente X do offset quando pressionadas teclas
             //para a esquerda ou para a direita.
             if (KeyboardState.IsKeyDown(Keys.Right))
             {
-                transform.position.X += 1f * delta;
+                playerTransform.position.X += playerSpeed * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.Left))
             {
-                transform.position.X -= 1f * delta;
+                playerTransform.position.X -= playerSpeed * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.Space))
             {
-                transform.position += transform.Forward * delta;
+                //transform.position += transform.Forward * delta;
             }
 
+            /*
             // Movimento da câmera -> fica estática, será o movimento do player
             if (KeyboardState.IsKeyDown(Keys.D))
             {
@@ -154,6 +156,8 @@ namespace CG
             // Rotação da câmera
             //camera.rotation.Y -= MouseState.Delta.X * 0.1f;
             //camera.rotation.X -= MouseState.Delta.Y * 0.1f;
+
+            */
         }
 
         // Função de atualização visual, chamada múltiplas vezes por segundo em
@@ -187,9 +191,9 @@ namespace CG
             programScroll?.ApplyCamera(camera);
 
             // Desenho do primeiro transform
-            material1?.Use();
-            program?.ApplyTransform(transform);
-            mesh?.Draw();
+            playerMaterial?.Use();
+            program?.ApplyTransform(playerTransform);
+            playerMesh?.Draw();
 
             // Desenho do segundo transform
             material2?.Use();
