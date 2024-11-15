@@ -125,7 +125,6 @@ namespace CG
             {
                 for (int i = 0; i < obstacles.Count; i++)
                 {
-                    obstacles[i].transform = null;
                     obstacles.RemoveAt(i);
                 }
             }
@@ -141,7 +140,7 @@ namespace CG
             // a quanto tempo a aplicação tá rodando
             // não pode ser delta pq no geral ele é constante, e se o parametro não mudar a textura também não muda
             float time = (float)GLFW.GetTime() - startTime;
-            Console.WriteLine($"Time: {time}");
+            //Console.WriteLine($"Time: {time}");
             
             GL.ClearColor(0f, 0f, 0f, 1f);            
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -180,7 +179,6 @@ namespace CG
             obstacleMaterial?.Use();
             foreach (var obstacle in obstacles)
             {
-                if (obstacle.isDestroyed) continue;
                 program?.ApplyTransform(obstacle.transform);
                 obstacleMesh?.Draw();
             }
