@@ -12,7 +12,7 @@ namespace CG
     {
         // componentes "herdados" do Game
         static Camera camera = Game.camera;
-        static Transform playerTransform = Game.playerTransform;
+        static Player player = Game.player;
         static List<Obstacle> obstacles = Game.obstacles;
 
         // componentes proprios do GameManager
@@ -26,13 +26,14 @@ namespace CG
             // transforma frequencia em intervalo (é mais intuivo assim)
             obstacleSpawnInterval = 1 / obstacleSpawnRate; 
 
-            ResetToStartPosition();
+            ResetMap();
         }
 
         public static void Update(float delta)
         {
             // player
-            playerTransform.rotation.Y += delta * 9f;
+            player.Rotate(9f, delta);
+            player.Update(delta);
 
             // obstaculos
             obstacleSpawnTimer += delta;
@@ -46,9 +47,9 @@ namespace CG
                 obstacle.transform.position.Z += 4f * delta;
 
                 // 0.5 é o raio do collider do jogador
-                if (CheckCollision(playerTransform, obstacle.transform, 0.5f))
+                if (CheckCollision(player.Transform, obstacle.transform, 0.5f))
                 {
-                    Console.WriteLine("obstacle transform é igual ao player transform");
+                    Console.WriteLine("Colisão entre obstáculo e player");
                 }               
             }
         }
@@ -69,7 +70,7 @@ namespace CG
                 collider1.position.Z <= collider2.position.Z + offset;
         }
 
-        private static void ResetToStartPosition()
+        private static void ResetMap()
         {
             // camera
             camera.position.Z = 8f;
@@ -77,8 +78,11 @@ namespace CG
             camera.rotation.X = 320f;
 
             // player
-            playerTransform.position.Z = 5.5f;
+            player.ResetPostion();
             Game.transform2.position.Y = 1f;
+
+            // map
+            obstacles.Clear();
         }
 
         private static void SpawnObstacle()

@@ -35,6 +35,8 @@ namespace CG
         
         DirectionalLight light = new DirectionalLight();
 
+        public static Player player = new Player();
+
         float playerSpeed = 3f;
         float scrollingSpeed = 4f;
         float startTime = (float)GLFW.GetTime(); // por padrao é um double
@@ -109,7 +111,7 @@ namespace CG
 
             // O delta representa o tempo passado entre frames.
             float delta = (float)args.Time;
-            totalElapsedTime = totalElapsedTime + delta;
+            totalElapsedTime += delta;
 
             GameManager.Update(delta);
 
@@ -117,11 +119,13 @@ namespace CG
             //para a esquerda ou para a direita.
             if (KeyboardState.IsKeyDown(Keys.Right))
             {
-                playerTransform.position.X += playerSpeed * delta;
+                player.Move(1, delta);
+                //playerTransform.position.X += playerSpeed * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.Left))
             {
-                playerTransform.position.X -= playerSpeed * delta;
+                player.Move(-1, delta);
+                //playerTransform.position.X -= playerSpeed * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.Space))
             {
@@ -163,7 +167,7 @@ namespace CG
 
             // Desenho do primeiro transform
             playerMaterial?.Use();
-            program?.ApplyTransform(playerTransform);
+            program?.ApplyTransform(player.Transform);
             playerMesh?.Draw();
 
             // Desenho do segundo transform
