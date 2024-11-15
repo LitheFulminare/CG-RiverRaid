@@ -55,11 +55,13 @@ namespace CG
         
         private static bool CheckCollision(Transform collider1, Transform collider2, float offset)
         {
-            // processing
-            // ship.getX() >= powerup.getX() - 35 &&
-            // ship.getX() <= powerup.getX() + 35 &&
-            // ship.getY() >= powerup.getY() - 35 &&
-            // ship.getY() <= powerup.getY() + 35)
+            /*
+            diretamente do processing
+             ship.getX() >= powerup.getX() - 35 &&
+             ship.getX() <= powerup.getX() + 35 &&
+             ship.getY() >= powerup.getY() - 35 &&
+             ship.getY() <= powerup.getY() + 35)
+            */
 
             return collider1.position.X >= collider2.position.X - offset &&
                 collider1.position.X <= collider2.position.X + offset &&
