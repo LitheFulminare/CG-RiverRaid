@@ -38,7 +38,7 @@ namespace CG
             obstacleSpawnTimer += delta;
             if (obstacleSpawnTimer >= obstacleSpawnInterval)
             {
-                SpawnEnemy();
+                SpawnObstacle();
             }
 
             foreach (var obstacle in obstacles)
@@ -59,7 +59,7 @@ namespace CG
             Game.transform2.position.Y = 1f;
         }
 
-        private static void SpawnEnemy()
+        private static void SpawnObstacle()
         {
             // reseta o timer
             obstacleSpawnTimer = 0f;

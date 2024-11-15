@@ -121,6 +121,13 @@ namespace CG
             {
                 playerTransform.position.X -= playerSpeed * delta;
             }
+            if (KeyboardState.IsKeyDown(Keys.Space))
+            {
+                for (int i = 0; i < obstacles.Count; i++)
+                {
+
+                }
+            }
         }
 
         // Função de atualização visual, chamada múltiplas vezes por segundo em
@@ -172,6 +179,7 @@ namespace CG
             obstacleMaterial?.Use();
             foreach (var obstacle in obstacles)
             {
+                // checar se obstacle tá fora da tela ou não
                 program?.ApplyTransform(obstacle);
                 obstacleMesh?.Draw();
             }
