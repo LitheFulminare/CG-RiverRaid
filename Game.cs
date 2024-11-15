@@ -39,7 +39,7 @@ namespace CG
 
         float playerSpeed = 3f;
         float scrollingSpeed = 4f;
-        float startTime = (float)GLFW.GetTime(); // por padrao é um double
+        float startTime = 0f; // por padrao é um double
         float totalElapsedTime;
 
         public static List<Obstacle> obstacles = new List<Obstacle>();
