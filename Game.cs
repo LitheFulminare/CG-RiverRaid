@@ -125,7 +125,7 @@ namespace CG
             {
                 for (int i = 0; i < obstacles.Count; i++)
                 {
-                    obstacles.RemoveAt(i);
+                    //obstacles.RemoveAt(i);
                 }
             }
         }

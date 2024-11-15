@@ -17,7 +17,7 @@ namespace CG
 
         // componentes proprios do GameManager
         static float obstacleSpawnTimer = 0f; // reseta sempre que um obstaculo spawna
-        static float obstacleSpawnRate = 1f; // frequencia de spawn, maior frequencia gera mais obstaculos
+        static float obstacleSpawnRate = 3f; // frequencia de spawn, maior frequencia gera mais obstaculos
 
         static float obstacleSpawnInterval;
 
@@ -65,8 +65,7 @@ namespace CG
             obstacleSpawnTimer = 0f;
 
             // cria novo obstaculo e adiciona a lista
-            Obstacle obstacle = new Obstacle();
-            obstacles.Add(obstacle);
+            obstacles.Add(new Obstacle());
         }
     }
 }
