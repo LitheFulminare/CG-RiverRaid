@@ -12,6 +12,8 @@ namespace CG
     // Nota-se que 
     internal class Game : GameWindow
     {
+        InputManager inputManager = new InputManager();
+
         ShaderProgram? program;// Shader program utilizado.
         ShaderProgram? programScroll; // shader usado pra scrollar o mapa
 
@@ -21,20 +23,20 @@ namespace CG
         Mesh? mesh2;
         Mesh? mapMesh;
 
-        Transform playerTransform = new Transform();
-        Transform transform2 = new Transform();
-        Transform mapTransform = new Transform();
+        public static Transform playerTransform = new Transform();
+        public static Transform transform2 = new Transform();
+        public static Transform mapTransform = new Transform();
         
         TexturedMaterial? playerMaterial;
         TexturedMaterial? material2;
         TexturedMaterial? mapMaterial;
-        
-        Camera camera = new Camera();
+
+        public static Camera camera = new Camera();
         
         DirectionalLight light = new DirectionalLight();
 
         float playerSpeed = 3f;
-        float startTime = (float)GLFW.GetTime();
+        float startTime = (float)GLFW.GetTime(); // por padrao é um double
 
         // Construtor base da classe. Por simplicidade, recebe apenas um título
         //e dimensões de altura e largura da janela que será aberta.
@@ -60,6 +62,7 @@ namespace CG
 
             mapMesh = Mesh.CreatePlane(25f);
 
+            // shaders basicos
             Shader vertexShader = Shader.CreateFromFile("./assets/shaders/shader.vert", ShaderType.VertexShader);
             Shader fragmentShader = Shader.CreateFromFile("./assets/shaders/shader.frag", ShaderType.FragmentShader);
 
@@ -80,19 +83,13 @@ namespace CG
 
             // camera -> proporção da tela e posição
             camera.aspectRatio = (float)Size.X / Size.Y;
-            camera.position.Z = 8f;
-            camera.position.Y = 3.5f;
-            camera.rotation.X = 320f;
-
-            // posição do player
-            playerTransform.position.Z = 5.5f;
-
-            transform2.position.Y = 1f;
 
             light.color = new Vector3(1f, 0.8f, 0.6f);
 
             // Travamento do cursor do mouse para o centro da tela.
             CursorState = CursorState.Grabbed;
+
+            GameManager.Start();
         }
 
         // Função de atualização lógica, chamada múltiplas vezes por segundo em
@@ -105,7 +102,8 @@ namespace CG
             // O delta representa o tempo passado entre frames.
             float delta = (float)args.Time;
 
-            GameManager.Update(delta);          
+            GameManager.Update(delta);
+            inputManager.Update();
 
             playerTransform.rotation.Y += delta * 9f;
 
@@ -167,9 +165,7 @@ namespace CG
         //um intervalo pré-definido que pode variar dependendo de configurações 
         //de VSync, por exemplo.
         protected override void OnRenderFrame(FrameEventArgs args)
-        {
-            //float delta = (float)args.Time;
-            
+        {           
             // a quanto tempo a aplicação tá rodando
             // não pode ser delta pq no geral ele é constante, e se o parametro não mudar a textura também não muda
             float time = (float)GLFW.GetTime() - startTime;
