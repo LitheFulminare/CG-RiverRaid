@@ -12,8 +12,6 @@ namespace CG
     // Nota-se que 
     internal class Game : GameWindow
     {
-        InputManager inputManager = new InputManager();
-
         ShaderProgram? program;// Shader program utilizado.
         ShaderProgram? programScroll; // shader usado pra scrollar o mapa
 
@@ -103,9 +101,6 @@ namespace CG
             float delta = (float)args.Time;
 
             GameManager.Update(delta);
-            inputManager.Update();
-
-            playerTransform.rotation.Y += delta * 9f;
 
             // Modificação do componente X do offset quando pressionadas teclas
             //para a esquerda ou para a direita.

@@ -19,7 +19,7 @@ namespace CG
 
         public static void Update(float delta)
         {
-
+            playerTransform.rotation.Y += delta * 9f;
         }
 
         private static void ResetToStartPosition()
@@ -31,7 +31,7 @@ namespace CG
 
             // player
             playerTransform.position.Z = 5.5f;
-            Game.transform2.position.Y = 1f;
+            Game.transform2.position.Y = 1f;           
         }
     }
 }
