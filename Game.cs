@@ -167,8 +167,11 @@ namespace CG
 
             // Desenho do primeiro transform
             playerMaterial?.Use();
-            program?.ApplyTransform(player.Transform);
-            playerMesh?.Draw();
+            if (!player.IsDead)
+            {
+                program?.ApplyTransform(player.Transform);
+                playerMesh?.Draw();
+            }            
 
             // Desenho do segundo transform
             material2?.Use();

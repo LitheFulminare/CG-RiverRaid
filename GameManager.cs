@@ -70,7 +70,7 @@ namespace CG
                 collider1.position.Z <= collider2.position.Z + offset;
         }
 
-        private static void ResetMap()
+        public static void ResetMap()
         {
             // camera
             camera.position.Z = 8f;

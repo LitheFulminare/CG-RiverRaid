@@ -14,14 +14,15 @@ namespace CG
         private int _fuel = 100;
 
         private float _speed = 3f;
-        private float _iFrames = 1f;
-        private float _iFramesTimer = 0f;
+        private float _deathTime = 1f;
+        private float _respawnTimer = 0f;
 
-        private bool isInvincible = false;
+        private bool _isDead = false;
 
         private Transform _transform;
 
         public Transform Transform => _transform;
+        public bool IsDead => _isDead;
 
         public Player()
         {
@@ -30,15 +31,13 @@ namespace CG
 
         public void Update(float delta)
         {
-            if (isInvincible)
+            if (_isDead)
             {
-                _iFramesTimer += delta;
+                _respawnTimer += delta;
 
-                if (_iFramesTimer < _iFrames) return;
+                if (_respawnTimer < _deathTime) return;
 
-                Console.WriteLine("Invincibilidade acabou");
-                _iFramesTimer = 0;
-                isInvincible = false;
+                Respawn();
             }
 
             //if (KeyboardState.IsKeyDown(Keys.Right))
@@ -65,11 +64,19 @@ namespace CG
 
         public void TakeDamage()
         {
-            if (isInvincible) return;
+            if (_isDead) return;
 
             Console.WriteLine("Player tomou dano");
             _life -= 1;
-            isInvincible = true;
+            _isDead = true;
+        }
+
+        private void Respawn()
+        {
+            ResetPostion();
+            _isDead = false;
+            _respawnTimer = 0f;
+            GameManager.ResetMap();
         }
     }
 }
