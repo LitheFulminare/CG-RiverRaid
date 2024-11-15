@@ -20,6 +20,7 @@ namespace CG
         Mesh? playerMesh;
         Mesh? mesh2;
         Mesh? mapMesh;
+        Mesh? obstacleMesh;
 
         public static Transform playerTransform = new Transform();
         public static Transform transform2 = new Transform();
@@ -28,14 +29,19 @@ namespace CG
         TexturedMaterial? playerMaterial;
         TexturedMaterial? material2;
         TexturedMaterial? mapMaterial;
+        TexturedMaterial? obstacleMaterial;
 
         public static Camera camera = new Camera();
         
         DirectionalLight light = new DirectionalLight();
 
         float playerSpeed = 3f;
+        float scrollingSpeed = 4f;
         float startTime = (float)GLFW.GetTime(); // por padrao é um double
 
+        public static List<Transform> obstacles = new List<Transform>();
+        Random random = new Random();
+        
         // Construtor base da classe. Por simplicidade, recebe apenas um título
         //e dimensões de altura e largura da janela que será aberta.
         public Game(string title, int width, int height) : base(GameWindowSettings.Default, new NativeWindowSettings() { Title = title, ClientSize = (width, height) })
@@ -79,6 +85,9 @@ namespace CG
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
             mapMaterial = new TexturedMaterial(programScroll, new Vector3(0f, 0.7f, 1f), texture);
 
+            obstacleMesh = Mesh.CreateCube(0.5f); // Example shape; adjust as needed
+            obstacleMaterial = new TexturedMaterial(program, new Vector3(0.7f, 0f, 0f), texture);
+
             // camera -> proporção da tela e posição
             camera.aspectRatio = (float)Size.X / Size.Y;
 
@@ -112,7 +121,6 @@ namespace CG
             {
                 playerTransform.position.X -= playerSpeed * delta;
             }
-
         }
 
         // Função de atualização visual, chamada múltiplas vezes por segundo em
@@ -139,6 +147,7 @@ namespace CG
 
             // parametros para scrollar o mar
             programScroll?.SetUniform("time", time);
+            programScroll?.SetUniform("speed", scrollingSpeed / 10);
 
             // Envio das matrizes de câmera para o shader program.
             program?.ApplyCamera(camera);
@@ -158,6 +167,14 @@ namespace CG
             mapMaterial?.Use();
             programScroll?.ApplyTransform(mapTransform);
             mapMesh?.Draw();
+
+            // Render obstacles
+            obstacleMaterial?.Use();
+            foreach (var obstacle in obstacles)
+            {
+                program?.ApplyTransform(obstacle);
+                obstacleMesh?.Draw();
+            }
 
             SwapBuffers();
         }

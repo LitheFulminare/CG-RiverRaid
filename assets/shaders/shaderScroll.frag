@@ -11,11 +11,10 @@ uniform vec3 u_AmbientLight;
 uniform vec3 u_Color;
 
 uniform float time;
+uniform float speed;
 
 void main() 
 {
-	float speed = 0.4f;
-
 	vec2 uv = f_TexCoords;
 	uv.y += speed * time;
 
