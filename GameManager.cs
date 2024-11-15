@@ -64,7 +64,8 @@ namespace CG
              ship.getY() <= powerup.getY() + 35)
             */
 
-            return collider1.position.X >= collider2.position.X - offset &&
+            return 
+                collider1.position.X >= collider2.position.X - offset &&
                 collider1.position.X <= collider2.position.X + offset &&
                 collider1.position.Z >= collider2.position.Z - offset &&
                 collider1.position.Z <= collider2.position.Z + offset;

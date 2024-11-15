@@ -14,8 +14,8 @@ namespace CG
         private int _fuel = 100;
 
         private float _speed = 3f;
-        private float _deathTime = 1f;
-        private float _respawnTimer = 0f;
+        private float _deathTime = 1f; // tempo que é esperado antes de resetar
+        private float _respawnTimer = 0f; // timer q começa a contar quando o player morre
 
         private bool _isDead = false;
 
@@ -31,6 +31,7 @@ namespace CG
 
         public void Update(float delta)
         {
+            // respawn
             if (_isDead)
             {
                 _respawnTimer += delta;
@@ -46,6 +47,7 @@ namespace CG
             //}
         }
 
+        // o ideal seria substituir isso pra toda a logica de movimento do player estar contida dentro do player
         public void Move(int direction, float delta)
         {
             _transform.position.X += _speed * delta * direction;
@@ -66,7 +68,6 @@ namespace CG
         {
             if (_isDead) return;
 
-            Console.WriteLine("Player tomou dano");
             _life -= 1;
             _isDead = true;
         }

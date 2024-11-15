@@ -20,8 +20,8 @@ namespace CG
         public void OnSpawn()
         {
             Random random = new Random();           
-            transform.position.X = random.Next(-5, 5);
-            transform.position.Z = -13f;
+            transform.position.X = random.Next(-5, 5); // posição aleatoria da esquerda pra direita
+            transform.position.Z = -13f; // faz spawnar no fundo, fora da tela
         }
     }
 }
