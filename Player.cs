@@ -15,6 +15,9 @@ namespace CG
 
         private float _speed = 3f;
         private float _iFrames = 1f;
+        private float _iFramesTimer = 0f;
+
+        private bool isInvincible = false;
 
         private Transform _transform;
 
@@ -27,6 +30,17 @@ namespace CG
 
         public void Update(float delta)
         {
+            if (isInvincible)
+            {
+                _iFramesTimer += delta;
+
+                if (_iFramesTimer < _iFrames) return;
+
+                Console.WriteLine("Invincibilidade acabou");
+                _iFramesTimer = 0;
+                isInvincible = false;
+            }
+
             //if (KeyboardState.IsKeyDown(Keys.Right))
             //{
             //    _transform.position.X += _speed * delta;
@@ -47,6 +61,15 @@ namespace CG
         public void Rotate(float speed, float delta)
         {
             _transform.rotation.Y += delta * speed;
+        }
+
+        public void TakeDamage()
+        {
+            if (isInvincible) return;
+
+            Console.WriteLine("Player tomou dano");
+            _life -= 1;
+            isInvincible = true;
         }
     }
 }

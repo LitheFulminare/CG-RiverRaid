@@ -49,7 +49,7 @@ namespace CG
                 // 0.5 é o raio do collider do jogador
                 if (CheckCollision(player.Transform, obstacle.transform, 0.5f))
                 {
-                    Console.WriteLine("Colisão entre obstáculo e player");
+                    player.TakeDamage();
                 }               
             }
         }
