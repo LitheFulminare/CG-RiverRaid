@@ -38,6 +38,7 @@ namespace CG
         float playerSpeed = 3f;
         float scrollingSpeed = 4f;
         float startTime = (float)GLFW.GetTime(); // por padrao é um double
+        float totalElapsedTime;
 
         public static List<Obstacle> obstacles = new List<Obstacle>();
         Random random = new Random();
@@ -108,6 +109,7 @@ namespace CG
 
             // O delta representa o tempo passado entre frames.
             float delta = (float)args.Time;
+            totalElapsedTime = totalElapsedTime + delta;
 
             GameManager.Update(delta);
 
@@ -139,8 +141,7 @@ namespace CG
 
             // a quanto tempo a aplicação tá rodando
             // não pode ser delta pq no geral ele é constante, e se o parametro não mudar a textura também não muda
-            float time = (float)GLFW.GetTime() - startTime;
-            //Console.WriteLine($"Time: {time}");
+            //Console.WriteLine($"Time: {totalElapsedTime}");
             
             GL.ClearColor(0f, 0f, 0f, 1f);            
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -153,7 +154,7 @@ namespace CG
             programScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
 
             // parametros para scrollar o mar
-            programScroll?.SetUniform("time", time);
+            programScroll?.SetUniform("time", totalElapsedTime);
             programScroll?.SetUniform("speed", scrollingSpeed / 10);
 
             // Envio das matrizes de câmera para o shader program.
