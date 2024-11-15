@@ -39,7 +39,7 @@ namespace CG
         float scrollingSpeed = 4f;
         float startTime = (float)GLFW.GetTime(); // por padrao é um double
 
-        public static List<Transform> obstacles = new List<Transform>();
+        public static List<Obstacle> obstacles = new List<Obstacle>();
         Random random = new Random();
         
         // Construtor base da classe. Por simplicidade, recebe apenas um título
@@ -125,7 +125,8 @@ namespace CG
             {
                 for (int i = 0; i < obstacles.Count; i++)
                 {
-
+                    obstacles[i].transform = null;
+                    obstacles.RemoveAt(i);
                 }
             }
         }
@@ -179,8 +180,8 @@ namespace CG
             obstacleMaterial?.Use();
             foreach (var obstacle in obstacles)
             {
-                // checar se obstacle tá fora da tela ou não
-                program?.ApplyTransform(obstacle);
+                if (obstacle.isDestroyed) continue;
+                program?.ApplyTransform(obstacle.transform);
                 obstacleMesh?.Draw();
             }
 

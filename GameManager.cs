@@ -13,7 +13,7 @@ namespace CG
         // componentes "herdados" do Game
         static Camera camera = Game.camera;
         static Transform playerTransform = Game.playerTransform;
-        static List<Transform> obstacles = Game.obstacles;
+        static List<Obstacle> obstacles = Game.obstacles;
 
         // componentes proprios do GameManager
         static float obstacleSpawnTimer = 0f; // reseta sempre que um obstaculo spawna
@@ -43,7 +43,7 @@ namespace CG
 
             foreach (var obstacle in obstacles)
             {
-                obstacle.position.Z += 4f * delta;
+                obstacle.transform.position.Z += 4f * delta;
             }
         }
 
@@ -65,8 +65,8 @@ namespace CG
             obstacleSpawnTimer = 0f;
 
             // cria novo obstaculo e adiciona a lista
-            Transform obstacleTransform = new Transform();
-            obstacles.Add(obstacleTransform);
+            Obstacle obstacle = new Obstacle();
+            obstacles.Add(obstacle);
         }
     }
 }
