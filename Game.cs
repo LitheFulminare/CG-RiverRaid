@@ -112,61 +112,21 @@ namespace CG
             {
                 playerTransform.position.X -= playerSpeed * delta;
             }
-            if (KeyboardState.IsKeyDown(Keys.Space))
-            {
-                //transform.position += transform.Forward * delta;
-            }
 
-            /*
-            // Movimento da câmera -> fica estática, será o movimento do player
-            if (KeyboardState.IsKeyDown(Keys.D))
-            {
-                //player.position += player.Right* delta;
-
-                //camera.position += camera.Right * delta;
-            }
-            if (KeyboardState.IsKeyDown(Keys.A))
-            {
-                //camera.position -= camera.Right * delta;
-            }
-            if (KeyboardState.IsKeyDown(Keys.W))
-            {
-                //camera.position += camera.Forward * delta;
-            }
-            if (KeyboardState.IsKeyDown(Keys.S))
-            {
-                //camera.position -= camera.Forward * delta;
-            }
-            if (KeyboardState.IsKeyDown(Keys.Q))
-            {
-                //camera.position -= camera.Up * delta;
-            }
-            if (KeyboardState.IsKeyDown(Keys.E))
-            {
-                //camera.position += camera.Up * delta;
-            }
-
-            // Scroll do mapa -> não mudará a posição,tudo será feito por shader
-            //mapTransform.position -= mapTransform.Forward * delta;
-
-            // Rotação da câmera
-            //camera.rotation.Y -= MouseState.Delta.X * 0.1f;
-            //camera.rotation.X -= MouseState.Delta.Y * 0.1f;
-
-            */
         }
 
         // Função de atualização visual, chamada múltiplas vezes por segundo em
         //um intervalo pré-definido que pode variar dependendo de configurações 
         //de VSync, por exemplo.
         protected override void OnRenderFrame(FrameEventArgs args)
-        {           
+        {
+            base.OnRenderFrame(args);
+
             // a quanto tempo a aplicação tá rodando
             // não pode ser delta pq no geral ele é constante, e se o parametro não mudar a textura também não muda
             float time = (float)GLFW.GetTime() - startTime;
             Console.WriteLine($"Time: {time}");
-
-            base.OnRenderFrame(args);
+            
             GL.ClearColor(0f, 0f, 0f, 1f);            
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 

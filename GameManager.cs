@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Windowing.GraphicsLibraryFramework;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace CG
 
             // player
             playerTransform.position.Z = 5.5f;
-            Game.transform2.position.Y = 1f;           
+            Game.transform2.position.Y = 1f;
         }
     }
 }
