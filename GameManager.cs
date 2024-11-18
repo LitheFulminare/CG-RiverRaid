@@ -70,10 +70,8 @@ namespace CG
             */
 
             return
-                collider1position.X >= collider2position.X - offset &&
-                collider1position.X <= collider2position.X + offset &&
-                collider1position.Z >= collider2position.Z - offset &&
-                collider1position.Z <= collider2position.Z + offset;
+                Math.Abs(collider1position.X - collider2position.X) <= offset &&
+                Math.Abs(collider1position.Z - collider2position.Z) <= offset;
         }
 
         public static void ResetMap()
