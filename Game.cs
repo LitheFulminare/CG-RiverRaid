@@ -66,14 +66,14 @@ namespace CG
 
             GL.CullFace(CullFaceMode.Back);
 
-            //  ------- meshes ------
+            #region Mesh
             playerMesh = Mesh.CreateSphere(0.5f);
             mesh2 = Mesh.CreateCube(1f);
             mapMesh = Mesh.CreatePlane(25f);
-            obstacleMesh = Mesh.CreateCube(2f); 
+            obstacleMesh = Mesh.CreateCube(2f);
+            #endregion
 
-
-            // ------ shaders ------
+            #region Shader
             // shaders basicos
             Shader vertexShader = Shader.CreateFromFile("./assets/shaders/shader.vert", ShaderType.VertexShader);
             Shader fragmentShader = Shader.CreateFromFile("./assets/shaders/shader.frag", ShaderType.FragmentShader);
@@ -86,20 +86,22 @@ namespace CG
 
             programScroll = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
             programScroll.Use();
+            #endregion
 
-            // ------ texturas ------
+            #region Texture
             texture = new Texture("./assets/textures/img.jpg");
             waterTexture = new Texture("./assets/textures/water.jpg");
             rockTexture = new Texture("./assets/textures/rock.jpg");
+            #endregion
 
-            // ------ materiais -----
+            #region Material
             playerMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
             mapMaterial = new TexturedMaterial(programScroll, new Vector3(1f, 1f, 1f), waterTexture);
             obstacleMaterial = new TexturedMaterial(program, new Vector3(1f, 1f, 1f), rockTexture);
+            #endregion
 
-            // ------ misc ------
-
+            #region Misc
             // camera -> proporção da tela e posição
             camera.aspectRatio = (float)Size.X / Size.Y;
 
@@ -107,6 +109,7 @@ namespace CG
 
             // Travamento do cursor do mouse para o centro da tela.
             CursorState = CursorState.Grabbed;
+            #endregion
 
             GameManager.Start();
         }
