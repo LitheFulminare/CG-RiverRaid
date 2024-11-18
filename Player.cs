@@ -47,7 +47,7 @@ namespace CG
             //}
         }
 
-        // o ideal seria substituir isso pra toda a logica de movimento do player estar contida dentro do player
+        // o ideal seria substituir isso pra toda a logica de movimento do player estar contida dentro do player (ou na sua propria classe)
         public void Move(int direction, float delta)
         {
             _transform.position.X += _speed * delta * direction;

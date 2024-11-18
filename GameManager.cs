@@ -33,8 +33,6 @@ namespace CG
 
         public static void Update(float delta)
         {
-            Console.WriteLine($"Obstaculos na lista: {obstacles.Count}");
-
             // player
             player.Rotate(9f, delta);
             player.Update(delta);

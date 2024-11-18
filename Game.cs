@@ -66,8 +66,8 @@ namespace CG
 
             playerMesh = Mesh.CreateSphere(0.5f);
             mesh2 = Mesh.CreateCube(1f);
-
             mapMesh = Mesh.CreatePlane(25f);
+            obstacleMesh = Mesh.CreateCube(2f);
 
             // shaders basicos
             Shader vertexShader = Shader.CreateFromFile("./assets/shaders/shader.vert", ShaderType.VertexShader);
@@ -87,9 +87,7 @@ namespace CG
             playerMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
             mapMaterial = new TexturedMaterial(programScroll, new Vector3(0f, 0.7f, 1f), texture);
-
-            obstacleMesh = Mesh.CreateCube(0.5f); // Example shape; adjust as needed
-            obstacleMaterial = new TexturedMaterial(program, new Vector3(0.7f, 0f, 0f), texture);
+            obstacleMaterial = new TexturedMaterial(program, new Vector3(0.2f, 0.2f, 0.2f), texture);
 
             // camera -> proporção da tela e posição
             camera.aspectRatio = (float)Size.X / Size.Y;
@@ -117,18 +115,20 @@ namespace CG
 
             // Modificação do componente X do offset quando pressionadas teclas
             //para a esquerda ou para a direita.
-            if (KeyboardState.IsKeyDown(Keys.Right))
+            if (KeyboardState.IsKeyDown(Keys.Right) || KeyboardState.IsKeyDown(Keys.D))
             {
                 player.Move(1, delta);
                 //playerTransform.position.X += playerSpeed * delta;
             }
-            if (KeyboardState.IsKeyDown(Keys.Left))
+            if (KeyboardState.IsKeyDown(Keys.Left) || KeyboardState.IsKeyDown(Keys.A))
             {
                 player.Move(-1, delta);
                 //playerTransform.position.X -= playerSpeed * delta;
             }
             if (KeyboardState.IsKeyDown(Keys.Space))
             {
+                // logica de atirar aqui
+
                 for (int i = 0; i < obstacles.Count; i++)
                 {
                     //obstacles.RemoveAt(i);
