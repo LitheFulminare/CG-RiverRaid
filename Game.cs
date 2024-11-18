@@ -68,6 +68,7 @@ namespace CG
 
             InitializeMeshes();
             InitializeShaders();
+            InitializeTextures();
             InitializeMaterials();
 
             #region Misc
