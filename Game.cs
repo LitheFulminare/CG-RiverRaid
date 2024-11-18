@@ -42,7 +42,7 @@ namespace CG
         float startTime = 0f; // por padrao é um double
         float totalElapsedTime;
 
-        public static List<Obstacle> obstacles = new List<Obstacle>();
+        public static Queue<Obstacle> obstacles = new Queue<Obstacle>();
         Random random = new Random();
         
         // Construtor base da classe. Por simplicidade, recebe apenas um título

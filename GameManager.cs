@@ -15,11 +15,11 @@ namespace CG
         // componentes "herdados" do Game
         static Camera camera = Game.camera;
         static Player player = Game.player;
-        static List<Obstacle> obstacles = Game.obstacles;
+        static Queue<Obstacle> obstacles = Game.obstacles;
 
         // componentes proprios do GameManager
         static float obstacleSpawnTimer = 0f; // reseta sempre que um obstaculo spawna
-        static float obstacleSpawnRate = 3f; // frequencia de spawn, maior frequencia gera mais obstaculos
+        static float obstacleSpawnRate = 2f; // frequencia de spawn, maior frequencia gera mais obstaculos
 
         static float obstacleSpawnInterval;
 
@@ -96,8 +96,13 @@ namespace CG
             // reseta o timer
             obstacleSpawnTimer = 0f;
 
-            // cria novo obstaculo e adiciona a lista
-            obstacles.Add(new Obstacle());
+            // cria novo obstaculo e adiciona na fila
+            obstacles.Enqueue(new Obstacle());
+
+            if (obstacles.Count > 15)
+            {
+                obstacles.Dequeue();
+            }
         }
     }
 }
