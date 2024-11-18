@@ -66,40 +66,9 @@ namespace CG
 
             GL.CullFace(CullFaceMode.Back);
 
-            #region Mesh
-            playerMesh = Mesh.CreateSphere(0.5f);
-            mesh2 = Mesh.CreateCube(1f);
-            mapMesh = Mesh.CreatePlane(25f);
-            obstacleMesh = Mesh.CreateCube(2f);
-            #endregion
-
-            #region Shader
-            // shaders basicos
-            Shader vertexShader = Shader.CreateFromFile("./assets/shaders/shader.vert", ShaderType.VertexShader);
-            Shader fragmentShader = Shader.CreateFromFile("./assets/shaders/shader.frag", ShaderType.FragmentShader);
-
-            // shader para scroll do mapa
-            Shader fragmentShaderScroll = Shader.CreateFromFile("./assets/shaders/shaderScroll.frag", ShaderType.FragmentShader);
-
-            program = new ShaderProgram(new Shader[] { vertexShader, fragmentShader });
-            program.Use();
-
-            programScroll = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
-            programScroll.Use();
-            #endregion
-
-            #region Texture
-            texture = new Texture("./assets/textures/img.jpg");
-            waterTexture = new Texture("./assets/textures/water.jpg");
-            rockTexture = new Texture("./assets/textures/rock.jpg");
-            #endregion
-
-            #region Material
-            playerMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
-            material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
-            mapMaterial = new TexturedMaterial(programScroll, new Vector3(1f, 1f, 1f), waterTexture);
-            obstacleMaterial = new TexturedMaterial(program, new Vector3(1f, 1f, 1f), rockTexture);
-            #endregion
+            InitializeMeshes();
+            InitializeShaders();
+            InitializeMaterials();
 
             #region Misc
             // camera -> proporção da tela e posição
@@ -112,6 +81,45 @@ namespace CG
             #endregion
 
             GameManager.Start();
+        }
+
+        private void InitializeMeshes()
+        {
+            playerMesh = Mesh.CreateSphere(0.5f);
+            mesh2 = Mesh.CreateCube(1f);
+            mapMesh = Mesh.CreatePlane(25f);
+            obstacleMesh = Mesh.CreateCube(2f);
+        }
+
+        private void InitializeShaders()
+        {
+            // shaders basicos
+            Shader vertexShader = Shader.CreateFromFile("./assets/shaders/shader.vert", ShaderType.VertexShader);
+            Shader fragmentShader = Shader.CreateFromFile("./assets/shaders/shader.frag", ShaderType.FragmentShader);
+
+            // shader para scroll do mapa
+            Shader fragmentShaderScroll = Shader.CreateFromFile("./assets/shaders/shaderScroll.frag", ShaderType.FragmentShader);
+
+            program = new ShaderProgram(new Shader[] { vertexShader, fragmentShader });
+            program.Use();
+
+            programScroll = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
+            programScroll.Use();
+        }
+
+        private void InitializeTextures()
+        {
+            texture = new Texture("./assets/textures/img.jpg");
+            waterTexture = new Texture("./assets/textures/water.jpg");
+            rockTexture = new Texture("./assets/textures/rock.jpg");
+        }
+
+        private void InitializeMaterials()
+        {
+            playerMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
+            material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
+            mapMaterial = new TexturedMaterial(programScroll, new Vector3(1f, 1f, 1f), waterTexture);
+            obstacleMaterial = new TexturedMaterial(program, new Vector3(1f, 1f, 1f), rockTexture);
         }
 
         // Função de atualização lógica, chamada múltiplas vezes por segundo em
