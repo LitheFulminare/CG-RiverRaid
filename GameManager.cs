@@ -1,8 +1,10 @@
-﻿using OpenTK.Windowing.GraphicsLibraryFramework;
+﻿using OpenTK.Mathematics;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +33,8 @@ namespace CG
 
         public static void Update(float delta)
         {
+            Console.WriteLine($"Obstaculos na lista: {obstacles.Count}");
+
             // player
             player.Rotate(9f, delta);
             player.Update(delta);
@@ -47,14 +51,15 @@ namespace CG
                 obstacle.transform.position.Z += 4f * delta;
 
                 // 0.5 é o raio do collider do jogador
-                if (CheckCollision(player.Transform, obstacle.transform, 0.5f))
+                if (CheckCollision(player.Transform.position, obstacle.transform.position, 0.5f))
                 {
                     player.TakeDamage();
                 }               
             }
         }
-        
-        private static bool CheckCollision(Transform collider1, Transform collider2, float offset)
+
+        // precisa do OpenTK.Mathematics senão ele reclama de ambiguidade do Vector3
+        private static bool CheckCollision(OpenTK.Mathematics.Vector3 collider1position, OpenTK.Mathematics.Vector3 collider2position, float offset)
         {
             /*
             diretamente do processing
@@ -64,11 +69,11 @@ namespace CG
              ship.getY() <= powerup.getY() + 35)
             */
 
-            return 
-                collider1.position.X >= collider2.position.X - offset &&
-                collider1.position.X <= collider2.position.X + offset &&
-                collider1.position.Z >= collider2.position.Z - offset &&
-                collider1.position.Z <= collider2.position.Z + offset;
+            return
+                collider1position.X >= collider2position.X - offset &&
+                collider1position.X <= collider2position.X + offset &&
+                collider1position.Z >= collider2position.Z - offset &&
+                collider1position.Z <= collider2position.Z + offset;
         }
 
         public static void ResetMap()
