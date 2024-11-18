@@ -17,6 +17,7 @@ namespace CG
 
         Texture? texture;
         Texture? waterTexture;
+        Texture? rockTexture;
 
         Mesh? playerMesh;
         Mesh? mesh2;
@@ -65,11 +66,14 @@ namespace CG
 
             GL.CullFace(CullFaceMode.Back);
 
+            //  ------- meshes ------
             playerMesh = Mesh.CreateSphere(0.5f);
             mesh2 = Mesh.CreateCube(1f);
             mapMesh = Mesh.CreatePlane(25f);
-            obstacleMesh = Mesh.CreateCube(2f);
+            obstacleMesh = Mesh.CreateCube(2f); 
 
+
+            // ------ shaders ------
             // shaders basicos
             Shader vertexShader = Shader.CreateFromFile("./assets/shaders/shader.vert", ShaderType.VertexShader);
             Shader fragmentShader = Shader.CreateFromFile("./assets/shaders/shader.frag", ShaderType.FragmentShader);
@@ -83,13 +87,18 @@ namespace CG
             programScroll = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
             programScroll.Use();
 
+            // ------ texturas ------
             texture = new Texture("./assets/textures/img.jpg");
             waterTexture = new Texture("./assets/textures/water.jpg");
+            rockTexture = new Texture("./assets/textures/rock.jpg");
 
+            // ------ materiais -----
             playerMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
-            mapMaterial = new TexturedMaterial(programScroll, new Vector3(0f, 0.7f, 1f), waterTexture);
-            obstacleMaterial = new TexturedMaterial(program, new Vector3(0.2f, 0.2f, 0.2f), texture);
+            mapMaterial = new TexturedMaterial(programScroll, new Vector3(1f, 1f, 1f), waterTexture);
+            obstacleMaterial = new TexturedMaterial(program, new Vector3(1f, 1f, 1f), rockTexture);
+
+            // ------ misc ------
 
             // camera -> proporção da tela e posição
             camera.aspectRatio = (float)Size.X / Size.Y;
