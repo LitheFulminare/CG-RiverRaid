@@ -16,6 +16,7 @@ namespace CG
         ShaderProgram? programScroll; // shader usado pra scrollar o mapa
 
         Texture? texture;
+        Texture? waterTexture;
 
         Mesh? playerMesh;
         Mesh? mesh2;
@@ -83,10 +84,11 @@ namespace CG
             programScroll.Use();
 
             texture = new Texture("./assets/textures/img.jpg");
+            waterTexture = new Texture("./assets/textures/water.jpg");
 
             playerMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
-            mapMaterial = new TexturedMaterial(programScroll, new Vector3(0f, 0.7f, 1f), texture);
+            mapMaterial = new TexturedMaterial(programScroll, new Vector3(0f, 0.7f, 1f), waterTexture);
             obstacleMaterial = new TexturedMaterial(program, new Vector3(0.2f, 0.2f, 0.2f), texture);
 
             // camera -> proporção da tela e posição
