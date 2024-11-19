@@ -11,6 +11,7 @@ namespace CG
     {
         //private Collider _collider;
         private static float _originalSpeed = 4f;
+        private static float _speedCap = 3 * _originalSpeed;
         private static float _speed = _originalSpeed;
 
         public bool isDestroyed = false;
@@ -37,12 +38,23 @@ namespace CG
             randomYPosition = Single.Lerp(-0.5f, 0.5f, randomYPosition);
 
             transform.position.X = random.Next(-5, 5); // posição aleatoria da esquerda pra direita
-            transform.position.Z = -13f; // faz spawnar no fundo, fora da tela
+            transform.position.Z = -18f; // faz spawnar no fundo, fora da tela
             transform.position.Y += randomYPosition;
         }
+
+        // aumenta a velocidade quando um obstaculo é destruido
+        // tem um cap (agora é 3x a original)
         public static void IncreaseSpeed()
         {
-            _speed *= 1.05f;
+            float increasedSpeed = _speed * 1.05f;
+
+            if (increasedSpeed > _speedCap)
+            {
+                _speed = _speedCap;
+                return;
+            }
+
+            _speed = increasedSpeed;
         }
 
         public static void ResetSpeed()

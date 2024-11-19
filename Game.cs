@@ -14,8 +14,8 @@ namespace CG
     {
         // ------ Shader ------
         ShaderProgram? program;// Shader program utilizado.
-        ShaderProgram? programScroll; // shader usado pra scrollar o mapa
-        ShaderProgram? programScroll2; // scroll mais lento para simular parallax / profundidade
+        ShaderProgram? programFastScroll; // shader usado pra scrollar o mapa
+        ShaderProgram? programSlowScroll; // scroll mais lento para simular parallax / profundidade
 
         // ------ Textura ------
         Texture? texture;
@@ -118,11 +118,11 @@ namespace CG
             program = new ShaderProgram(new Shader[] { vertexShader, fragmentShader });
             program.Use();
 
-            programScroll = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
-            programScroll.Use();
+            programFastScroll = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
+            programFastScroll.Use();
 
-            programScroll2 = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
-            programScroll2.Use();
+            programSlowScroll = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
+            programSlowScroll.Use();
         }
 
         private void InitializeTextures()
@@ -135,8 +135,8 @@ namespace CG
         private void InitializeMaterials()
         {
             playerMaterial = new TexturedMaterial(program, new Vector4(1f, 0.4f, 0.4f, 1f), waterTexture);
-            topWaterMaterial = new TexturedMaterial(programScroll, new Vector4(1f, 1f, 1f, 0.5f), waterTexture);
-            bottomWaterMaterial = new TexturedMaterial(programScroll2, new Vector4(0.2f, 0.5f, 0.75f, 1f), waterTexture);
+            topWaterMaterial = new TexturedMaterial(programFastScroll, new Vector4(1f, 1f, 1f, 0.4f), waterTexture);
+            bottomWaterMaterial = new TexturedMaterial(programSlowScroll, new Vector4(0.2f, 0.5f, 0.75f, 1f), waterTexture);
             obstacleMaterial = new TexturedMaterial(program, new Vector4(1f, 1f, 1f, 1f), rockTexture);
             projectileMaterial = new TexturedMaterial(program, new Vector4(1f, 0f, 0f, 1f), waterTexture);
         }
@@ -190,30 +190,29 @@ namespace CG
             program?.ApplyDirectionalLight(light);
             program?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
 
-            programScroll?.ApplyDirectionalLight(light);
-            programScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
+            programFastScroll?.ApplyDirectionalLight(light);
+            programFastScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
 
-            programScroll2?.ApplyDirectionalLight(light);
-            programScroll2?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
+            programSlowScroll?.ApplyDirectionalLight(light);
+            programSlowScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
 
             // parametros para scrollar o mar
-            programScroll?.SetUniform("time", totalElapsedTime);
-            programScroll?.SetUniform("speed", scrollingSpeed / 10);
+            programFastScroll?.SetUniform("time", totalElapsedTime);
+            programFastScroll?.SetUniform("speed", scrollingSpeed / 10);
 
             program?.ApplyDirectionalLight(light);
             program?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
 
-            programScroll?.ApplyDirectionalLight(light);
-            programScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
+            programFastScroll?.ApplyDirectionalLight(light);
+            programFastScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
 
-            // parametros para scrollar o mar
-            programScroll2?.SetUniform("time", totalElapsedTime);
-            programScroll2?.SetUniform("speed", scrollingSpeed / 20f);
+            programSlowScroll?.SetUniform("time", totalElapsedTime);
+            programSlowScroll?.SetUniform("speed", scrollingSpeed / 20f);
 
             // Envio das matrizes de câmera para o shader program.
             program?.ApplyCamera(camera);
-            programScroll?.ApplyCamera(camera);
-            programScroll2?.ApplyCamera(camera);
+            programFastScroll?.ApplyCamera(camera);
+            programSlowScroll?.ApplyCamera(camera);
 
             // Desenho do primeiro transform
             playerMaterial?.Use();
@@ -246,14 +245,14 @@ namespace CG
 
             // mapa
             bottomWaterMaterial?.Use();
-            programScroll2?.ApplyTransform(bottomWaterTransform);
+            programSlowScroll?.ApplyTransform(bottomWaterTransform);
             bottomWaterMesh?.Draw();
 
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             topWaterMaterial?.Use();
-            programScroll?.ApplyTransform(topWaterTransform);
+            programFastScroll?.ApplyTransform(topWaterTransform);
             topWaterMesh?.Draw();
 
             SwapBuffers();
