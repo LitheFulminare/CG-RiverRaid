@@ -56,7 +56,7 @@ namespace CG
             {
                 obstacle.transform.position.Z += 4f * delta;
 
-                Console.WriteLine($"Tiros na lista: {projectiles.Count}");
+                //Console.WriteLine($"Tiros na lista: {projectiles.Count}");
 
                 foreach (var projectile in projectiles.ToList())
                 {
