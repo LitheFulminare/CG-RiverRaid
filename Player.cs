@@ -71,6 +71,11 @@ namespace CG
             _life -= 1;
             _isDead = true;
         }
+        
+        private void Shoot()
+        {
+
+        }
 
         private void Respawn()
         {
