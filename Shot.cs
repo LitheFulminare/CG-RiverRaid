@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,11 +14,13 @@ namespace CG
 
         public float Velocity => _velocity;
         public Transform Transform => _transform;
-        
-        public Shot(float playerZPosition)
+
+        // msm coisa do CheckCollision no GameManger
+        // sem OpenTK.Mathematics ele não sabe qual Vector3 é
+        public Shot(OpenTK.Mathematics.Vector3 playerPostision)
         {
             _transform = new Transform();
-            _transform.position.Z = playerZPosition;
+            _transform.position = playerPostision;
         }
 
         public void Update(float delta)

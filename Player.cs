@@ -75,7 +75,7 @@ namespace CG
         
         public Shot Shoot()
         {
-            return new Shot(_transform.position.Z);
+            return new Shot(_transform.position);
         }
 
         private void Respawn()
