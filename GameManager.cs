@@ -72,6 +72,7 @@ namespace CG
                     {
                         obstacles.Remove(obstacle);
                         projectiles.Remove(projectile);
+                        break;
                     }
                 }
 

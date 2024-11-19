@@ -10,8 +10,9 @@ namespace CG
     internal class Shot
     {
         private float _velocity = 20f;
+
         private float lifespanTimer = 0f;
-        private float lifespan = 2f;
+        private float lifespan = 2f; // tempo que o tiro dura antes de ser destruido
 
         private bool _exceededLifespan = false;
 
@@ -32,11 +33,7 @@ namespace CG
         public void Update(float delta)
         {
             _transform.position.Z -= _velocity * delta;
-            LifeTimer(delta);
-        }
 
-        private void LifeTimer(float delta)
-        {
             lifespanTimer += delta;
             _exceededLifespan = lifespanTimer >= lifespan;
         }
