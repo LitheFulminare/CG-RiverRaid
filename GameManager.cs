@@ -57,6 +57,7 @@ namespace CG
         }
 
         // precisa do OpenTK.Mathematics senão ele reclama de ambiguidade do Vector3
+        // o ideal seria refatorar como colisão é processada, isso daqui tá muito longo
         private static bool CheckCollision(OpenTK.Mathematics.Vector3 collider1position, OpenTK.Mathematics.Vector3 collider2position, float collider1Size, float collider2Size)
         {
             /*

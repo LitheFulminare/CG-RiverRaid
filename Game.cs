@@ -44,6 +44,8 @@ namespace CG
         float startTime = 0f; // por padrao é um double
         float totalElapsedTime;
 
+        public static float obstacleSize = 2f;
+
         public static Queue<Obstacle> obstacles = new Queue<Obstacle>();
         Random random = new Random();
         
@@ -89,7 +91,7 @@ namespace CG
             playerMesh = Mesh.CreateSphere(0.5f);
             mesh2 = Mesh.CreateCube(1f);
             mapMesh = Mesh.CreatePlane(25f);
-            obstacleMesh = Mesh.CreateCube(2f);
+            obstacleMesh = Mesh.CreateCube(obstacleSize);
         }
 
         private void InitializeShaders()
