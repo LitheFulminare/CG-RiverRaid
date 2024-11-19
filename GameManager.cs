@@ -13,9 +13,11 @@ namespace CG
     internal static class GameManager
     {
         // componentes "herdados" do Game
+        // serve pra não ficar escrevendo 'Game.' toda hora
         static Camera camera = Game.camera;
         static Player player = Game.player;
         static Queue<Obstacle> obstacles = Game.obstacles;
+        static float obstacleSize = Game.obstacleSize;
 
         // componentes proprios do GameManager
         static float obstacleSpawnTimer = 0f; // reseta sempre que um obstaculo spawna
@@ -49,7 +51,7 @@ namespace CG
                 obstacle.transform.position.Z += 4f * delta;
 
                 // 0.5 é o raio do collider do jogador
-                if (CheckCollision(player.Transform.position, obstacle.transform.position, 1f, 0.5f))
+                if (CheckCollision(player.Transform.position, obstacle.transform.position, obstacleSize, 0.5f))
                 {
                     player.TakeDamage();
                 }               
