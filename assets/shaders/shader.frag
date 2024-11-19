@@ -8,11 +8,11 @@ uniform sampler2D u_Texture;
 uniform vec3 u_LightDirection;
 uniform vec3 u_LightColor;
 uniform vec3 u_AmbientLight;
-uniform vec3 u_Color;
+uniform vec4 u_Color;
 
 void main() {
 	float lightIntensity = max(-dot(u_LightDirection, normalize(f_Normal)), 0);
 
-	out_Color = vec4(u_Color, 1.0) * texture(u_Texture, f_TexCoords);
+	out_Color = u_Color * texture(u_Texture, f_TexCoords);
 	out_Color.rgb *= clamp(u_LightColor * lightIntensity + u_AmbientLight, 0, 1);
 }

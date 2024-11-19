@@ -12,8 +12,10 @@ namespace CG
     // Nota-se que 
     internal class Game : GameWindow
     {
+        // ------ Shader ------
         ShaderProgram? program;// Shader program utilizado.
         ShaderProgram? programScroll; // shader usado pra scrollar o mapa
+        ShaderProgram? programScroll2; // scroll mais lento para simular parallax / profundidade
 
         Texture? texture;
         Texture? waterTexture;
@@ -22,17 +24,20 @@ namespace CG
         Mesh? playerMesh;
         Mesh? mesh2;
         Mesh? mapMesh;
+        Mesh? map2Mesh;
         Mesh? obstacleMesh;
         Mesh? projectileMesh;
 
         public static Transform playerTransform = new Transform();
         public static Transform transform2 = new Transform();
         public static Transform mapTransform = new Transform();
+        public static Transform map2Transform = new Transform();
         public static Transform projectileTransform = new Transform();
 
         TexturedMaterial? playerMaterial;
         TexturedMaterial? material2;
         TexturedMaterial? mapMaterial;
+        TexturedMaterial? map2Material;
         TexturedMaterial? obstacleMaterial;
         TexturedMaterial? projectileMaterial;
 
@@ -68,6 +73,8 @@ namespace CG
         {
             base.OnLoad();
 
+            map2Transform.position.Y = -0.1f;
+
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
 
@@ -96,6 +103,7 @@ namespace CG
             playerMesh = Mesh.CreateSphere(0.5f);
             mesh2 = Mesh.CreateCube(1f);
             mapMesh = Mesh.CreatePlane(25f);
+            map2Mesh = Mesh.CreatePlane(35f);
             obstacleMesh = Mesh.CreateCube(obstacleSize);
             projectileMesh = Mesh.CreateSphere(projectileSize);
         }
@@ -114,6 +122,9 @@ namespace CG
 
             programScroll = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
             programScroll.Use();
+
+            programScroll2 = new ShaderProgram(new Shader[] { vertexShader, fragmentShaderScroll });
+            programScroll2.Use();
         }
 
         private void InitializeTextures()
@@ -125,11 +136,12 @@ namespace CG
 
         private void InitializeMaterials()
         {
-            playerMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), texture);
-            material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
-            mapMaterial = new TexturedMaterial(programScroll, new Vector3(1f, 1f, 1f), waterTexture);
-            obstacleMaterial = new TexturedMaterial(program, new Vector3(1f, 1f, 1f), rockTexture);
-            projectileMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), waterTexture);
+            playerMaterial = new TexturedMaterial(program, new Vector4(1f, 0f, 0f, 1f), texture);
+            material2 = new TexturedMaterial(program, new Vector4(0f, 0f, 1f, 1f), texture);
+            mapMaterial = new TexturedMaterial(programScroll, new Vector4(1f, 1f, 1f, 0.5f), waterTexture);
+            map2Material = new TexturedMaterial(programScroll2, new Vector4(0.2f, 0.5f, 0.75f, 1f), waterTexture);
+            obstacleMaterial = new TexturedMaterial(program, new Vector4(1f, 1f, 1f, 1f), rockTexture);
+            projectileMaterial = new TexturedMaterial(program, new Vector4(1f, 0f, 0f, 1f), waterTexture);
         }
 
         // Função de atualização lógica, chamada múltiplas vezes por segundo em
@@ -184,13 +196,27 @@ namespace CG
             programScroll?.ApplyDirectionalLight(light);
             programScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
 
+            programScroll2?.ApplyDirectionalLight(light);
+            programScroll2?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
+
             // parametros para scrollar o mar
             programScroll?.SetUniform("time", totalElapsedTime);
             programScroll?.SetUniform("speed", scrollingSpeed / 10);
 
+            program?.ApplyDirectionalLight(light);
+            program?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
+
+            programScroll?.ApplyDirectionalLight(light);
+            programScroll?.SetUniform("u_AmbientLight", new Vector3(0.1f, 0.1f, 0.2f));
+
+            // parametros para scrollar o mar
+            programScroll2?.SetUniform("time", totalElapsedTime);
+            programScroll2?.SetUniform("speed", scrollingSpeed / 20f);
+
             // Envio das matrizes de câmera para o shader program.
             program?.ApplyCamera(camera);
             programScroll?.ApplyCamera(camera);
+            programScroll2?.ApplyCamera(camera);
 
             // Desenho do primeiro transform
             playerMaterial?.Use();
@@ -204,11 +230,6 @@ namespace CG
             material2?.Use();
             program?.ApplyTransform(transform2);
             mesh2?.Draw();
-
-            // terceiro transform
-            mapMaterial?.Use();
-            programScroll?.ApplyTransform(mapTransform);
-            mapMesh?.Draw();
 
             // obstaculos
             obstacleMaterial?.Use();
@@ -225,6 +246,18 @@ namespace CG
                 program ?.ApplyTransform(projectile.Transform);
                 projectileMesh?.Draw();
             }
+
+            // mapa
+            map2Material?.Use();
+            programScroll2?.ApplyTransform(map2Transform);
+            map2Mesh?.Draw();
+
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
+            mapMaterial?.Use();
+            programScroll?.ApplyTransform(mapTransform);
+            mapMesh?.Draw();
 
             SwapBuffers();
         }

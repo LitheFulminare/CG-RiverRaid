@@ -4,10 +4,10 @@ namespace CG.Materials
 {
     internal class TexturedMaterial : Material
     {
-        public Vector3 color;
+        public Vector4 color;
         public Texture? texture;
 
-        public TexturedMaterial(ShaderProgram program, Vector3 color, Texture? texture = null) : base(program)
+        public TexturedMaterial(ShaderProgram program, Vector4 color, Texture? texture = null) : base(program)
         {
             this.color = color;
             this.texture = texture;

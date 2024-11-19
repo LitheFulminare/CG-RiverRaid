@@ -77,7 +77,7 @@ namespace CG
                 }
 
                 // 0.5 é o raio do collider do jogador
-                if (CheckCollision(player.Transform.position, obstacle.transform.position, obstacleSize, 0.5f))
+                if (CheckCollision(player.Transform.position, obstacle.transform.position, obstacleSize / 2, 0.5f))
                 {
                     player.TakeDamage();
                 }               

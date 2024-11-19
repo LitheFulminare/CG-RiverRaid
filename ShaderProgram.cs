@@ -63,6 +63,13 @@ namespace CG
             GL.Uniform3(location, value);
         }
 
+        public void SetUniform(string name, Vector4 value)
+        {
+            int location = GL.GetUniformLocation(_id, name);
+            Use();
+            GL.Uniform4(location, value);
+        }
+
         public void SetUniform(string name, Matrix4 value)
         {
             int location = GL.GetUniformLocation(_id, name);
