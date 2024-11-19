@@ -134,7 +134,7 @@ namespace CG
 
         private void InitializeMaterials()
         {
-            playerMaterial = new TexturedMaterial(program, new Vector4(1f, 0f, 0f, 1f), texture);
+            playerMaterial = new TexturedMaterial(program, new Vector4(1f, 0.4f, 0.4f, 1f), waterTexture);
             topWaterMaterial = new TexturedMaterial(programScroll, new Vector4(1f, 1f, 1f, 0.5f), waterTexture);
             bottomWaterMaterial = new TexturedMaterial(programScroll2, new Vector4(0.2f, 0.5f, 0.75f, 1f), waterTexture);
             obstacleMaterial = new TexturedMaterial(program, new Vector4(1f, 1f, 1f, 1f), rockTexture);
