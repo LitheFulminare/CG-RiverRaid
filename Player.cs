@@ -17,7 +17,7 @@ namespace CG
         private float _speed = 3f;
         private float _rotationSpeed = 400f;
 
-        private float _deathTime = 2.5f; // tempo que é esperado antes de resetar
+        private float _deathTime = 1.75f; // tempo que é esperado antes de resetar
         private float _respawnTimer = 0f; // timer q começa a contar quando o player morre
 
         private bool _isDead = false;

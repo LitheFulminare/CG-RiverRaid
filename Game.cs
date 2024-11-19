@@ -166,7 +166,7 @@ namespace CG
                 player.Move(-1, delta);
                 //playerTransform.position.X -= playerSpeed * delta;
             }
-            if (KeyboardState.IsKeyPressed(Keys.Space) && !player.IsDead)
+            if ((KeyboardState.IsKeyPressed(Keys.Space) || IsMouseButtonPressed(MouseButton.Left))&& !player.IsDead)
             {
                 projectiles.Add(player.Shoot());
             }
