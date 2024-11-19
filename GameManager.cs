@@ -26,14 +26,10 @@ namespace CG
         // componentes proprios do GameManager
         static float obstacleSpawnTimer = 0f; // reseta sempre que um obstaculo spawna
         static float obstacleSpawnRate = 2f; // frequencia de spawn, maior frequencia gera mais obstaculos
-
-        static float obstacleSpawnInterval;
+        static float obstacleSpawnInterval = 1 / obstacleSpawnRate;
 
         public static void Start()
         {
-            // transforma frequencia em intervalo (é mais intuivo assim)
-            obstacleSpawnInterval = 1 / obstacleSpawnRate;
-
             Game.bottomWaterTransform.position.Y = -2f;
 
             ResetMap();
@@ -70,6 +66,8 @@ namespace CG
                     if (CheckCollision(projectile.Transform.position, obstacle.transform.position, obstacleSize, projectileSize))
                     {
                         Obstacle.IncreaseSpeed();
+                        obstacleSpawnInterval /= 1.01f;
+
                         obstacles.Remove(obstacle);
                         projectiles.Remove(projectile);
                         break; // o Update do projetil tava sendo chamado varias vezes, o break impede isso
@@ -82,11 +80,6 @@ namespace CG
                     player.TakeDamage();
                 }               
             }
-        }
-
-        private static float FrequencyToInterval(float frequency)
-        {
-            return 1 / frequency;
         }
 
         // precisa do OpenTK.Mathematics senão ele reclama de ambiguidade do Vector3
@@ -117,10 +110,11 @@ namespace CG
 
             // player
             player.ResetPostion();
-            //Game.transform2.position.Y = 1f;
 
             // map
             obstacles.Clear();
+            obstacleSpawnInterval = 1 / obstacleSpawnRate;
+            Obstacle.ResetSpeed();
         }
 
         private static void SpawnObstacle()

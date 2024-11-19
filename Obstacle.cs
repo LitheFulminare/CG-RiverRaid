@@ -10,7 +10,8 @@ namespace CG
     internal class Obstacle
     {
         //private Collider _collider;
-        private static float _speed = 4f;
+        private static float _originalSpeed = 4f;
+        private static float _speed = _originalSpeed;
 
         public bool isDestroyed = false;
         public Transform transform;
@@ -42,6 +43,11 @@ namespace CG
         public static void IncreaseSpeed()
         {
             _speed *= 1.05f;
+        }
+
+        public static void ResetSpeed()
+        {
+            _speed = _originalSpeed;
         }
     }
 }
