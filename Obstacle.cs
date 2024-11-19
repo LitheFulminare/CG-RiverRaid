@@ -23,10 +23,15 @@ namespace CG
 
         public void OnSpawn()
         {
-            Random random = new Random();           
+            Random random = new Random();     
+            
+            // posição aleatoria no eixo Y
+            float randomYPosition = (float)random.NextDouble();
+            randomYPosition = Single.Lerp(-0.5f, 0.5f, randomYPosition);
+
             transform.position.X = random.Next(-5, 5); // posição aleatoria da esquerda pra direita
             transform.position.Z = -13f; // faz spawnar no fundo, fora da tela
-            transform.position.Y += 1f;
+            transform.position.Y += randomYPosition;
         }
     }
 }

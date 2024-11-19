@@ -101,7 +101,7 @@ namespace CG
         {
             playerMesh = Mesh.CreateSphere(0.5f);
             topWaterMesh = Mesh.CreatePlane(25f);
-            bottomWaterMesh = Mesh.CreatePlane(35f);
+            bottomWaterMesh = Mesh.CreatePlane(55f);
             obstacleMesh = Mesh.CreateCube(obstacleSize);
             projectileMesh = Mesh.CreateSphere(projectileSize);
         }

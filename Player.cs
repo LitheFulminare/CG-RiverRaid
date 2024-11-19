@@ -14,6 +14,7 @@ namespace CG
         private int _fuel = 100;
 
         private float _speed = 3f;
+        private float _rotationSpeed = 400f;
 
         private float _deathTime = 1f; // tempo que é esperado antes de resetar
         private float _respawnTimer = 0f; // timer q começa a contar quando o player morre
@@ -52,17 +53,13 @@ namespace CG
         public void Move(int direction, float delta)
         {
             _transform.position.X += _speed * delta * direction;
+            _transform.rotation.Y -= delta * _rotationSpeed * direction;
         }
 
         public void ResetPostion()
         {
             _transform.position.Z = 5.5f;
             _transform.position.X = 0f;
-        }
-
-        public void Rotate(float speed, float delta)
-        {
-            _transform.rotation.Y += delta * speed;
         }
 
         public void TakeDamage()

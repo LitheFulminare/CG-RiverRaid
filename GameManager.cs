@@ -34,7 +34,7 @@ namespace CG
             // transforma frequencia em intervalo (é mais intuivo assim)
             obstacleSpawnInterval = 1 / obstacleSpawnRate;
 
-            Game.bottomWaterTransform.position.Y = -0.1f;
+            Game.bottomWaterTransform.position.Y = -2f;
 
             ResetMap();
         }
@@ -42,10 +42,9 @@ namespace CG
         public static void Update(float delta)
         {
             // ------ player ------
-            player.Rotate(9f, delta);
             player.Update(delta);
         
-            // ------ obstaculos ------
+            // ------ obstaculos e projeteis ------
             obstacleSpawnTimer += delta;
             if (obstacleSpawnTimer >= obstacleSpawnInterval)
             {
