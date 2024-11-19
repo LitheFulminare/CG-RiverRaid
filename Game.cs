@@ -17,30 +17,35 @@ namespace CG
         ShaderProgram? programScroll; // shader usado pra scrollar o mapa
         ShaderProgram? programScroll2; // scroll mais lento para simular parallax / profundidade
 
+        // ------ Textura ------
         Texture? texture;
         Texture? waterTexture;
         Texture? rockTexture;
 
+        // ------ Mesh ------
         Mesh? playerMesh;
         Mesh? mesh2;
-        Mesh? mapMesh;
-        Mesh? map2Mesh;
+        Mesh? topWaterMesh; // agua translucida que fica em cima
+        Mesh? bottomWaterMesh;
         Mesh? obstacleMesh;
         Mesh? projectileMesh;
 
+        // ------ Transform ------
         public static Transform playerTransform = new Transform();
         public static Transform transform2 = new Transform();
-        public static Transform mapTransform = new Transform();
-        public static Transform map2Transform = new Transform();
+        public static Transform topWaterTransform = new Transform();
+        public static Transform bottomWaterTransform = new Transform();
         public static Transform projectileTransform = new Transform();
 
+        // ------ Material ------
         TexturedMaterial? playerMaterial;
         TexturedMaterial? material2;
-        TexturedMaterial? mapMaterial;
-        TexturedMaterial? map2Material;
+        TexturedMaterial? topWaterMaterial;
+        TexturedMaterial? bottomWaterMaterial;
         TexturedMaterial? obstacleMaterial;
         TexturedMaterial? projectileMaterial;
 
+        // ------ Misc ------
         public static Camera camera = new Camera();
         
         DirectionalLight light = new DirectionalLight();
@@ -73,7 +78,7 @@ namespace CG
         {
             base.OnLoad();
 
-            map2Transform.position.Y = -0.1f;
+            bottomWaterTransform.position.Y = -0.1f;
 
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
@@ -102,8 +107,8 @@ namespace CG
         {
             playerMesh = Mesh.CreateSphere(0.5f);
             mesh2 = Mesh.CreateCube(1f);
-            mapMesh = Mesh.CreatePlane(25f);
-            map2Mesh = Mesh.CreatePlane(35f);
+            topWaterMesh = Mesh.CreatePlane(25f);
+            bottomWaterMesh = Mesh.CreatePlane(35f);
             obstacleMesh = Mesh.CreateCube(obstacleSize);
             projectileMesh = Mesh.CreateSphere(projectileSize);
         }
@@ -138,8 +143,8 @@ namespace CG
         {
             playerMaterial = new TexturedMaterial(program, new Vector4(1f, 0f, 0f, 1f), texture);
             material2 = new TexturedMaterial(program, new Vector4(0f, 0f, 1f, 1f), texture);
-            mapMaterial = new TexturedMaterial(programScroll, new Vector4(1f, 1f, 1f, 0.5f), waterTexture);
-            map2Material = new TexturedMaterial(programScroll2, new Vector4(0.2f, 0.5f, 0.75f, 1f), waterTexture);
+            topWaterMaterial = new TexturedMaterial(programScroll, new Vector4(1f, 1f, 1f, 0.5f), waterTexture);
+            bottomWaterMaterial = new TexturedMaterial(programScroll2, new Vector4(0.2f, 0.5f, 0.75f, 1f), waterTexture);
             obstacleMaterial = new TexturedMaterial(program, new Vector4(1f, 1f, 1f, 1f), rockTexture);
             projectileMaterial = new TexturedMaterial(program, new Vector4(1f, 0f, 0f, 1f), waterTexture);
         }
@@ -248,16 +253,16 @@ namespace CG
             }
 
             // mapa
-            map2Material?.Use();
-            programScroll2?.ApplyTransform(map2Transform);
-            map2Mesh?.Draw();
+            bottomWaterMaterial?.Use();
+            programScroll2?.ApplyTransform(bottomWaterTransform);
+            bottomWaterMesh?.Draw();
 
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
-            mapMaterial?.Use();
-            programScroll?.ApplyTransform(mapTransform);
-            mapMesh?.Draw();
+            topWaterMaterial?.Use();
+            programScroll?.ApplyTransform(topWaterTransform);
+            topWaterMesh?.Draw();
 
             SwapBuffers();
         }
