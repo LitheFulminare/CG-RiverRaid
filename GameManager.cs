@@ -32,7 +32,9 @@ namespace CG
         public static void Start()
         {
             // transforma frequencia em intervalo (é mais intuivo assim)
-            obstacleSpawnInterval = 1 / obstacleSpawnRate; 
+            obstacleSpawnInterval = 1 / obstacleSpawnRate;
+
+            Game.bottomWaterTransform.position.Y = -0.1f;
 
             ResetMap();
         }
@@ -82,19 +84,6 @@ namespace CG
                     player.TakeDamage();
                 }               
             }
-
-            // ------ projeteis ------
-            //Console.WriteLine($"Tiros na lista: {projectiles.Count}");
-
-            //foreach (var projectile in projectiles)
-            //{
-            //    projectile.Update(delta);
-
-            //    if (CheckCollision(projectile.Transform.position, obstacle.transform.position, obstacleSize, 0.5f))
-            //    {
-            //       obstacle.TakeDamage();
-            //    }
-            //}
         }
 
         // precisa do OpenTK.Mathematics senão ele reclama de ambiguidade do Vector3

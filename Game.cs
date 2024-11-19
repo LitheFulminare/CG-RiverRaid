@@ -78,8 +78,6 @@ namespace CG
         {
             base.OnLoad();
 
-            bottomWaterTransform.position.Y = -0.1f;
-
             GL.Enable(EnableCap.CullFace);
             GL.Enable(EnableCap.DepthTest);
 
