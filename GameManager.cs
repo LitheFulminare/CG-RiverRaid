@@ -58,8 +58,6 @@ namespace CG
             {
                 obstacle.transform.position.Z += 4f * delta;
 
-                //Console.WriteLine($"Tiros na lista: {projectiles.Count}");
-
                 foreach (var projectile in projectiles.ToList())
                 {
                     if (projectile.ExceededLifespan)
@@ -74,7 +72,7 @@ namespace CG
                     {
                         obstacles.Remove(obstacle);
                         projectiles.Remove(projectile);
-                        break;
+                        break; // o Update do projetil tava sendo chamado varias vezes, o break impede isso
                     }
                 }
 
@@ -114,7 +112,7 @@ namespace CG
 
             // player
             player.ResetPostion();
-            Game.transform2.position.Y = 1f;
+            //Game.transform2.position.Y = 1f;
 
             // map
             obstacles.Clear();
@@ -125,7 +123,7 @@ namespace CG
             // reseta o timer
             obstacleSpawnTimer = 0f;
 
-            // cria novo obstaculo e adiciona na fila
+            // cria um novo obstaculo e adiciona na fila
             obstacles.Add(new Obstacle());
 
             if (obstacles.Count > 15)

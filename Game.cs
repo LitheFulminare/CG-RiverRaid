@@ -24,22 +24,19 @@ namespace CG
 
         // ------ Mesh ------
         Mesh? playerMesh;
-        Mesh? mesh2;
         Mesh? topWaterMesh; // agua translucida que fica em cima
-        Mesh? bottomWaterMesh;
+        Mesh? bottomWaterMesh; // agua opaca q fica em baixo
         Mesh? obstacleMesh;
         Mesh? projectileMesh;
 
         // ------ Transform ------
         public static Transform playerTransform = new Transform();
-        public static Transform transform2 = new Transform();
         public static Transform topWaterTransform = new Transform();
         public static Transform bottomWaterTransform = new Transform();
         public static Transform projectileTransform = new Transform();
 
         // ------ Material ------
         TexturedMaterial? playerMaterial;
-        TexturedMaterial? material2;
         TexturedMaterial? topWaterMaterial;
         TexturedMaterial? bottomWaterMaterial;
         TexturedMaterial? obstacleMaterial;
@@ -54,7 +51,7 @@ namespace CG
 
         float playerSpeed = 3f;
         float scrollingSpeed = 4f;
-        float startTime = 0f; // por padrao é um double
+        float startTime = 0f;
         float totalElapsedTime;
 
         public static float obstacleSize = 2f;
@@ -62,7 +59,6 @@ namespace CG
 
         public static List<Obstacle> obstacles = new List<Obstacle>();
         public static List<Shot> projectiles = new List<Shot>();
-        //Random random = new Random();
         
         // Construtor base da classe. Por simplicidade, recebe apenas um título
         //e dimensões de altura e largura da janela que será aberta.
@@ -104,7 +100,6 @@ namespace CG
         private void InitializeMeshes()
         {
             playerMesh = Mesh.CreateSphere(0.5f);
-            mesh2 = Mesh.CreateCube(1f);
             topWaterMesh = Mesh.CreatePlane(25f);
             bottomWaterMesh = Mesh.CreatePlane(35f);
             obstacleMesh = Mesh.CreateCube(obstacleSize);
@@ -140,7 +135,6 @@ namespace CG
         private void InitializeMaterials()
         {
             playerMaterial = new TexturedMaterial(program, new Vector4(1f, 0f, 0f, 1f), texture);
-            material2 = new TexturedMaterial(program, new Vector4(0f, 0f, 1f, 1f), texture);
             topWaterMaterial = new TexturedMaterial(programScroll, new Vector4(1f, 1f, 1f, 0.5f), waterTexture);
             bottomWaterMaterial = new TexturedMaterial(programScroll2, new Vector4(0.2f, 0.5f, 0.75f, 1f), waterTexture);
             obstacleMaterial = new TexturedMaterial(program, new Vector4(1f, 1f, 1f, 1f), rockTexture);
@@ -230,9 +224,9 @@ namespace CG
             }            
 
             // Desenho do segundo transform
-            material2?.Use();
-            program?.ApplyTransform(transform2);
-            mesh2?.Draw();
+            //material2?.Use();
+            //program?.ApplyTransform(transform2);
+            //mesh2?.Draw();
 
             // obstaculos
             obstacleMaterial?.Use();
