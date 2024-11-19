@@ -48,11 +48,11 @@ namespace CG
             float halfSize = size / 2f;
             float[] vertices =
             [
-                //posição                  //cor              //uv
+                //posição                  //normal           //uv
                 -halfSize, 0f,  halfSize,  1.0f, 0.0f, 0.0f,  0.0f, 0.0f,//0
                  halfSize, 0f,  halfSize,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f,//1
                  halfSize, 0f, -halfSize,  0.0f, 0.0f, 1.0f,  1.0f, 1.0f,//2
-                -halfSize, 0f, -halfSize,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f,//3
+                -halfSize, 0f, -halfSize,  1.0f, 1.0f, 1.0f,  0.0f, 1.0f,//3
             ];
             uint[] indices =
             [
