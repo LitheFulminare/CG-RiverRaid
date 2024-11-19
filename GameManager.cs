@@ -17,7 +17,7 @@ namespace CG
         static Camera camera = Game.camera;
         static Player player = Game.player;
         static List<Obstacle> obstacles = Game.obstacles;
-        static List<Shot> shots = Game.shots;
+        static List<Shot> shots = Game.projectiles;
         static float obstacleSize = Game.obstacleSize;
 
         // componentes proprios do GameManager

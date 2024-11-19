@@ -23,15 +23,18 @@ namespace CG
         Mesh? mesh2;
         Mesh? mapMesh;
         Mesh? obstacleMesh;
+        Mesh? projectileMesh;
 
         public static Transform playerTransform = new Transform();
         public static Transform transform2 = new Transform();
         public static Transform mapTransform = new Transform();
-        
+        public static Transform projectileTransform = new Transform();
+
         TexturedMaterial? playerMaterial;
         TexturedMaterial? material2;
         TexturedMaterial? mapMaterial;
         TexturedMaterial? obstacleMaterial;
+        TexturedMaterial? projectileMaterial;
 
         public static Camera camera = new Camera();
         
@@ -45,9 +48,10 @@ namespace CG
         float totalElapsedTime;
 
         public static float obstacleSize = 2f;
+        public static float projectileSize = 0.25f;
 
         public static List<Obstacle> obstacles = new List<Obstacle>();
-        public static List<Shot> shots = new List<Shot>();
+        public static List<Shot> projectiles = new List<Shot>();
         //Random random = new Random();
         
         // Construtor base da classe. Por simplicidade, recebe apenas um título
@@ -93,6 +97,7 @@ namespace CG
             mesh2 = Mesh.CreateCube(1f);
             mapMesh = Mesh.CreatePlane(25f);
             obstacleMesh = Mesh.CreateCube(obstacleSize);
+            projectileMesh = Mesh.CreateSphere(projectileSize);
         }
 
         private void InitializeShaders()
@@ -124,6 +129,7 @@ namespace CG
             material2 = new TexturedMaterial(program, new Vector3(0f, 0f, 1f), texture);
             mapMaterial = new TexturedMaterial(programScroll, new Vector3(1f, 1f, 1f), waterTexture);
             obstacleMaterial = new TexturedMaterial(program, new Vector3(1f, 1f, 1f), rockTexture);
+            projectileMaterial = new TexturedMaterial(program, new Vector3(1f, 0f, 0f), waterTexture);
         }
 
         // Função de atualização lógica, chamada múltiplas vezes por segundo em
@@ -153,7 +159,7 @@ namespace CG
             }
             if (KeyboardState.IsKeyPressed(Keys.Space))
             {
-                shots.Add(player.Shoot());
+                projectiles.Add(player.Shoot());
             }
         }
 
@@ -204,12 +210,20 @@ namespace CG
             programScroll?.ApplyTransform(mapTransform);
             mapMesh?.Draw();
 
-            // Render obstacles
+            // obstaculos
             obstacleMaterial?.Use();
             foreach (var obstacle in obstacles)
             {
                 program?.ApplyTransform(obstacle.transform);
                 obstacleMesh?.Draw();
+            }
+
+            // projeteis
+            projectileMaterial?.Use();
+            foreach (var projectile in projectiles)
+            {
+                program ?.ApplyTransform(projectile.Transform);
+                projectileMesh?.Draw();
             }
 
             SwapBuffers();
