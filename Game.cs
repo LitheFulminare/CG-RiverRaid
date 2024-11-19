@@ -231,7 +231,7 @@ namespace CG
             obstacleMaterial?.Use();
             foreach (var obstacle in obstacles)
             {
-                program?.ApplyTransform(obstacle.transform);
+                program?.ApplyTransform(obstacle.Transform);
                 obstacleMesh?.Draw();
             }
 

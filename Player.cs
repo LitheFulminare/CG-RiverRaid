@@ -10,6 +10,7 @@ namespace CG
 {
     internal class Player
     {
+        // life e fuel agora não são servem pra nada, n deu tempo de implemtar
         private int _life = 3;
         private int _fuel = 100;
 

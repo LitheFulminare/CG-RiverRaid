@@ -63,19 +63,19 @@ namespace CG
                   
                     projectile.Update(delta);
 
-                    if (CheckCollision(projectile.Transform.position, obstacle.transform.position, obstacleSize, projectileSize))
+                    if (CheckCollision(projectile.Transform.position, obstacle.Transform.position, obstacleSize, projectileSize))
                     {
                         Obstacle.IncreaseSpeed();
                         obstacleSpawnInterval /= 1.01f;
 
                         obstacles.Remove(obstacle);
                         projectiles.Remove(projectile);
-                        break; // o Update do projetil tava sendo chamado varias vezes, o break impede isso
+                        break;
                     }
                 }
 
                 // 0.5 é o raio do collider do jogador
-                if (CheckCollision(player.Transform.position, obstacle.transform.position, obstacleSize / 2, 0.5f))
+                if (CheckCollision(player.Transform.position, obstacle.Transform.position, obstacleSize / 2, 0.5f))
                 {
                     player.TakeDamage();
                 }               

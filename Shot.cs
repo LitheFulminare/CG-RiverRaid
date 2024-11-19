@@ -16,7 +16,7 @@ namespace CG
 
         private bool _exceededLifespan = false;
 
-        Transform _transform;
+        private Transform _transform;
 
         public float Velocity => _velocity;
         public bool ExceededLifespan => _exceededLifespan;
