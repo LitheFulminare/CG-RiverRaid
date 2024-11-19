@@ -8,7 +8,7 @@ namespace CG
 {
     internal class Shot
     {
-        private float _velocity = 5f;
+        private float _velocity = 20f;
         Transform _transform;
 
         public float Velocity => _velocity;
@@ -20,9 +20,9 @@ namespace CG
             _transform.position.Z = playerZPosition;
         }
 
-        public void UpdateMovement(float delta)
+        public void Update(float delta)
         {
-            _transform.position.Z += _velocity * delta;
+            _transform.position.Z -= _velocity * delta;
         }
     }
 }
