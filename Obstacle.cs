@@ -48,11 +48,11 @@ namespace CG
         {
             float increasedSpeed = _speed * 1.05f;
 
-            if (increasedSpeed > _speedCap)
-            {
-                _speed = _speedCap;
-                return;
-            }
+            //if (increasedSpeed > _speedCap)
+            //{
+            //    _speed = _speedCap;
+            //    return;
+            //}
 
             _speed = increasedSpeed;
         }

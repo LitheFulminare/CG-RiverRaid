@@ -58,7 +58,7 @@ namespace CG
                     if (projectile.ExceededLifespan)
                     {
                         projectiles.Remove(projectile);
-                        continue;
+                        break;
                     }
                   
                     projectile.Update(delta);
