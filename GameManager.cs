@@ -16,7 +16,7 @@ namespace CG
         // serve pra não ficar escrevendo 'Game.' toda hora
         static Camera camera = Game.camera;
         static Player player = Game.player;
-        static Queue<Obstacle> obstacles = Game.obstacles;
+        static List<Obstacle> obstacles = Game.obstacles;
         static float obstacleSize = Game.obstacleSize;
 
         // componentes proprios do GameManager
@@ -98,11 +98,11 @@ namespace CG
             obstacleSpawnTimer = 0f;
 
             // cria novo obstaculo e adiciona na fila
-            obstacles.Enqueue(new Obstacle());
+            obstacles.Add(new Obstacle());
 
             if (obstacles.Count > 15)
             {
-                obstacles.Dequeue();
+                obstacles.RemoveAt(0);
             }
         }
     }

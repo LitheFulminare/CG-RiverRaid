@@ -46,8 +46,9 @@ namespace CG
 
         public static float obstacleSize = 2f;
 
-        public static Queue<Obstacle> obstacles = new Queue<Obstacle>();
-        Random random = new Random();
+        public static List<Obstacle> obstacles = new List<Obstacle>();
+        public static List<Shot> shots = new List<Shot>();
+        //Random random = new Random();
         
         // Construtor base da classe. Por simplicidade, recebe apenas um título
         //e dimensões de altura e largura da janela que será aberta.
