@@ -15,8 +15,8 @@ namespace CG
         public float Velocity => _velocity;
         public Transform Transform => _transform;
 
-        // msm coisa do CheckCollision no GameManger
-        // sem OpenTK.Mathematics ele não sabe qual Vector3 é
+        // msm coisa do CheckCollision no GameManger,
+        // sem especificar OpenTK.Mathematics ele não sabe qual Vector3 é
         public Shot(OpenTK.Mathematics.Vector3 playerPostision)
         {
             _transform = new Transform();
