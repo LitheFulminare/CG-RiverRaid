@@ -151,14 +151,9 @@ namespace CG
                 player.Move(-1, delta);
                 //playerTransform.position.X -= playerSpeed * delta;
             }
-            if (KeyboardState.IsKeyDown(Keys.Space))
+            if (KeyboardState.IsKeyPressed(Keys.Space))
             {
-                // logica de atirar aqui
-
-                for (int i = 0; i < obstacles.Count; i++)
-                {
-                    //obstacles.RemoveAt(i);
-                }
+                shots.Add(player.Shoot());
             }
         }
 

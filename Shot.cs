@@ -14,9 +14,10 @@ namespace CG
         public float Velocity => _velocity;
         public Transform Transform => _transform;
         
-        public Shot()
+        public Shot(float playerZPosition)
         {
             _transform = new Transform();
+            _transform.position.Z = playerZPosition;
         }
 
         public void UpdateMovement(float delta)

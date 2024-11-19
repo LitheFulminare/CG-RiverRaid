@@ -17,6 +17,7 @@ namespace CG
         static Camera camera = Game.camera;
         static Player player = Game.player;
         static List<Obstacle> obstacles = Game.obstacles;
+        static List<Shot> shots = Game.shots;
         static float obstacleSize = Game.obstacleSize;
 
         // componentes proprios do GameManager
@@ -35,11 +36,11 @@ namespace CG
 
         public static void Update(float delta)
         {
-            // player
+            // ------ player ------
             player.Rotate(9f, delta);
             player.Update(delta);
-
-            // obstaculos
+        
+            // ------ obstaculos ------
             obstacleSpawnTimer += delta;
             if (obstacleSpawnTimer >= obstacleSpawnInterval)
             {
@@ -56,6 +57,9 @@ namespace CG
                     player.TakeDamage();
                 }               
             }
+
+            // ------ projeteis ------
+            Console.WriteLine($"Tiros na lista: {shots.Count}");
         }
 
         // precisa do OpenTK.Mathematics senão ele reclama de ambiguidade do Vector3

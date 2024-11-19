@@ -14,6 +14,7 @@ namespace CG
         private int _fuel = 100;
 
         private float _speed = 3f;
+
         private float _deathTime = 1f; // tempo que é esperado antes de resetar
         private float _respawnTimer = 0f; // timer q começa a contar quando o player morre
 
@@ -72,9 +73,9 @@ namespace CG
             _isDead = true;
         }
         
-        private void Shoot()
+        public Shot Shoot()
         {
-
+            return new Shot(_transform.position.Z);
         }
 
         private void Respawn()
