@@ -49,7 +49,7 @@ namespace CG
                 obstacle.transform.position.Z += 4f * delta;
 
                 // 0.5 é o raio do collider do jogador
-                if (CheckCollision(player.Transform.position, obstacle.transform.position, 0.5f))
+                if (CheckCollision(player.Transform.position, obstacle.transform.position, 1f, 0.5f))
                 {
                     player.TakeDamage();
                 }               
@@ -57,7 +57,7 @@ namespace CG
         }
 
         // precisa do OpenTK.Mathematics senão ele reclama de ambiguidade do Vector3
-        private static bool CheckCollision(OpenTK.Mathematics.Vector3 collider1position, OpenTK.Mathematics.Vector3 collider2position, float offset)
+        private static bool CheckCollision(OpenTK.Mathematics.Vector3 collider1position, OpenTK.Mathematics.Vector3 collider2position, float collider1Size, float collider2Size)
         {
             /*
             diretamente do processing
@@ -67,9 +67,11 @@ namespace CG
              ship.getY() <= powerup.getY() + 35)
             */
 
+            float totalOffset = collider1Size + collider2Size;
+
             return
-                Math.Abs(collider1position.X - collider2position.X) <= offset &&
-                Math.Abs(collider1position.Z - collider2position.Z) <= offset;
+                Math.Abs(collider1position.X - collider2position.X) <= totalOffset &&
+                Math.Abs(collider1position.Z - collider2position.Z) <= totalOffset;
         }
 
         public static void ResetMap()

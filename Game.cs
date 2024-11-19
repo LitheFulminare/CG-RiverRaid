@@ -79,7 +79,7 @@ namespace CG
 
             // Travamento do cursor do mouse para o centro da tela.
             CursorState = CursorState.Grabbed;
-            #endregion
+            #endregion Misc
 
             GameManager.Start();
         }
