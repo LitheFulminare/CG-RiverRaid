@@ -16,13 +16,16 @@ namespace CG
         // serve pra não ficar escrevendo 'Game.' toda hora
         static Camera camera = Game.camera;
         static Player player = Game.player;
+
         static List<Obstacle> obstacles = Game.obstacles;
         static List<Shot> projectiles = Game.projectiles;
+
         static float obstacleSize = Game.obstacleSize;
+        static float projectileSize = Game.projectileSize;
 
         // componentes proprios do GameManager
         static float obstacleSpawnTimer = 0f; // reseta sempre que um obstaculo spawna
-        static float obstacleSpawnRate = 2f; // frequencia de spawn, maior frequencia gera mais obstaculos
+        static float obstacleSpawnRate = 2.5f; // frequencia de spawn, maior frequencia gera mais obstaculos
 
         static float obstacleSpawnInterval;
 
@@ -47,9 +50,30 @@ namespace CG
                 SpawnObstacle();
             }
 
-            foreach (var obstacle in obstacles)
+            // aparentemente mudar os elementos da lista no meio do foreach da problema
+            // o 'ToList()' resolve isso
+            foreach (var obstacle in obstacles.ToList())
             {
                 obstacle.transform.position.Z += 4f * delta;
+
+                Console.WriteLine($"Tiros na lista: {projectiles.Count}");
+
+                foreach (var projectile in projectiles.ToList())
+                {
+                    if (projectile.ExceededLifespan)
+                    {
+                        projectiles.Remove(projectile);
+                        continue;
+                    }
+
+                    projectile.Update(delta);
+
+                    if (CheckCollision(projectile.Transform.position, obstacle.transform.position, obstacleSize, projectileSize))
+                    {
+                        obstacles.Remove(obstacle);
+                        projectiles.Remove(projectile);
+                    }
+                }
 
                 // 0.5 é o raio do collider do jogador
                 if (CheckCollision(player.Transform.position, obstacle.transform.position, obstacleSize, 0.5f))
@@ -59,12 +83,17 @@ namespace CG
             }
 
             // ------ projeteis ------
-            Console.WriteLine($"Tiros na lista: {projectiles.Count}");
+            //Console.WriteLine($"Tiros na lista: {projectiles.Count}");
 
-            foreach (var projectile in projectiles)
-            {
-                projectile.Update(delta);
-            }
+            //foreach (var projectile in projectiles)
+            //{
+            //    projectile.Update(delta);
+
+            //    if (CheckCollision(projectile.Transform.position, obstacle.transform.position, obstacleSize, 0.5f))
+            //    {
+            //       obstacle.TakeDamage();
+            //    }
+            //}
         }
 
         // precisa do OpenTK.Mathematics senão ele reclama de ambiguidade do Vector3
